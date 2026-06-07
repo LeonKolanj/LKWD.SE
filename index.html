@@ -1,0 +1,1823 @@
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LKWD.se — Leon Kolanj Webb & Utveckling | Hemsidor för lokala företag</title>
+  <meta name="description" content="Jag bygger hemsidor för lokala företag i Stockholm och Stockholmsområdet. Tydliga priser, inga dolda kostnader. Från 4 990 kr." />
+  <meta name="author" content="Leon Kolanj" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #1a1a1a;
+      color: #e8e6e1;
+      line-height: 1.65;
+    }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: rgba(26,26,26,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 16px 24px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+    .logo span { color: #c4622e; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { font-size: 0.9rem; color: #9a9590; transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-cta {
+      background: #c4622e;
+      padding: 8px 20px;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: #b05528; }
+    .mobile-btn { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 24px 80px;
+      position: relative;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero h1 span { color: #c4622e; font-style: italic; }
+    .hero p {
+      font-size: 1.1rem;
+      color: #9a9590;
+      max-width: 500px;
+      margin-bottom: 32px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: #c4622e; color: #fff; }
+    .btn-primary:hover { background: #b05528; transform: translateY(-2px); }
+    .btn-outline { border: 1px solid #3a3a3a; color: #9a9590; }
+    .btn-outline:hover { border-color: #c4622e; color: #c4622e; }
+
+    section { padding: 80px 0; scroll-margin-top: 80px; }
+    .section-tag {
+      color: #c4622e;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      color: #9a9590;
+      max-width: 500px;
+      margin-bottom: 48px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: #222;
+      padding: 32px;
+      border-radius: 12px;
+      border: 1px solid #2e2e2e;
+      transition: all 0.2s;
+    }
+    .service-card:hover { transform: translateY(-4px); border-color: #c4622e; }
+    .service-icon { font-size: 2rem; margin-bottom: 16px; }
+    .service-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 12px; }
+    .service-card p { font-size: 0.85rem; color: #9a9590; }
+
+    .portfolio-section {
+      background: #f5f0e8;
+    }
+    .portfolio-category {
+      margin-bottom: 48px;
+    }
+    .portfolio-category h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #c4622e;
+      display: inline-block;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .port-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .port-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+    .port-thumb {
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+    .port-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .port-status {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.7);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      color: #fff;
+      z-index: 2;
+    }
+    .tag-live { background: #c4622e; }
+    .port-body { padding: 20px; color: #1a1a1a; }
+    .port-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; margin-bottom: 8px; }
+    .port-body p { font-size: 0.8rem; color: #666; margin-bottom: 12px; }
+    .port-link {
+      color: #c4622e;
+      font-weight: 600;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+    .port-link:hover { gap: 10px; }
+    .package-badge {
+      display: inline-block;
+      background: rgba(196,98,46,0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      color: #c4622e;
+      margin-right: 6px;
+      margin-bottom: 12px;
+    }
+    .package-badge-green {
+      background: rgba(47,93,58,0.1);
+      color: #2f5d3a;
+    }
+
+    /* PRICING CARDS */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 1100px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  { .pricing-grid { grid-template-columns: 1fr; } }
+    .price-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      position: relative;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .price-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px -10px rgba(0,0,0,0.2);
+    }
+    .price-card.featured {
+      border: 2px solid #c4622e;
+      box-shadow: 0 8px 30px rgba(196,98,46,0.15);
+    }
+    .price-popular {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #c4622e;
+      color: #fff;
+      padding: 4px 16px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .price-card h3 { 
+      font-family: 'Cormorant Garamond', serif; 
+      font-size: 1.5rem; 
+      color: #1a1a1a; 
+      margin-bottom: 8px; 
+      font-weight: 700;
+    }
+    .price-amount { 
+      font-size: 2.5rem; 
+      font-weight: 700; 
+      color: #c4622e; 
+      margin: 16px 0 4px; 
+    }
+    .price-amount small { 
+      font-size: 0.9rem; 
+      color: #666; 
+    }
+    .price-for { 
+      font-size: 0.85rem; 
+      color: #444; 
+      margin-top: 4px; 
+      font-weight: 500; 
+    }
+    .price-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .price-features { 
+      list-style: none; 
+      margin: 24px 0; 
+      flex: 1;
+    }
+    .price-features li { 
+      font-size: 0.85rem; 
+      color: #333; 
+      padding: 8px 0; 
+      border-bottom: 1px solid #eee; 
+    }
+    /* Enbart CSS-genererad bock - ingen emoji i HTML */
+    .price-features li::before { 
+      content: "✓ "; 
+      color: #c4622e; 
+      font-weight: 700; 
+    }
+    .price-features li.no::before { 
+      content: "✗ "; 
+      color: #999; 
+    }
+    .drift-required {
+      background: #c4622e15;
+      color: #c4622e;
+      font-size: 0.7rem;
+      padding: 8px 12px;
+      border-radius: 20px;
+      margin: 12px 0;
+      text-align: center;
+    }
+    .upgrade-btn {
+      background: #c4622e20;
+      border: 1px solid #c4622e;
+      color: #c4622e;
+      padding: 12px 16px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin: 16px 0 8px 0;
+      width: 100%;
+      text-align: center;
+    }
+    .upgrade-btn:hover {
+      background: #c4622e;
+      color: white;
+    }
+    .price-cta {
+      display: block;
+      text-align: center;
+      background: #c4622e;
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+      margin-top: 16px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .price-cta:hover { 
+      background: #b05528; 
+    }
+
+    /* DRIFT CARDS */
+    .drift-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .drift-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.2s;
+      cursor: pointer;
+      position: relative;
+    }
+    .drift-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+    .drift-card.featured {
+      border: 2px solid #c4622e;
+    }
+    .drift-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #c4622e;
+      color: white;
+      padding: 4px 16px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .drift-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: #1a1a1a; margin-top: 8px; }
+    .drift-price { font-size: 1.8rem; font-weight: 700; color: #c4622e; margin: 12px 0; }
+    .drift-price small { font-size: 0.9rem; color: #666; }
+    .drift-features { list-style: none; margin: 16px 0; }
+    .drift-features li { font-size: 0.8rem; color: #444; padding: 6px 0; }
+    .drift-features li.yes::before { content: "✓ "; color: #c4622e; font-weight: 700; }
+    .drift-features li.no::before { content: "✗ "; color: #999; }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+    .step {
+      text-align: center;
+      padding: 32px;
+      background: #222;
+      border-radius: 12px;
+      transition: transform 0.2s;
+    }
+    .step:hover { transform: translateY(-4px); border: 1px solid #c4622e; }
+    .step-num {
+      width: 50px;
+      height: 50px;
+      background: rgba(196,98,46,0.2);
+      color: #c4622e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 auto 16px;
+    }
+    .step h3 { font-family: 'Cormorant Garamond', serif; margin-bottom: 8px; }
+    .step p { font-size: 0.85rem; color: #9a9590; }
+
+    .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    .about-text p { margin-bottom: 20px; color: #9a9590; }
+    .about-card {
+      background: #222;
+      padding: 32px;
+      border-radius: 12px;
+    }
+    .about-pts { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+    .about-pt { display: flex; gap: 12px; align-items: flex-start; }
+    .about-pt-icon { font-size: 1.3rem; }
+
+    .faq-section {
+      background: #f5f0e8;
+    }
+    .faq-list {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #e0d9cc;
+    }
+    .faq-item {
+      border-bottom: 1px solid #e0d9cc;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      width: 100%;
+      background: #fff;
+      border: none;
+      padding: 20px 24px;
+      text-align: left;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    .faq-q:hover { background: #f5f0e8; }
+    .faq-q span { font-size: 1.2rem; color: #c4622e; }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: #fff;
+    }
+    .faq-a p {
+      padding: 0 24px 20px;
+      color: #5a5550;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+    .read-more-btn {
+      display: inline-block;
+      background: #c4622e;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 12px;
+      transition: background 0.2s;
+    }
+    .read-more-btn:hover { background: #b05528; }
+
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    .contact-det { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #2e2e2e; }
+    .contact-det a:hover { color: #c4622e; }
+
+    .contact-form {
+      background: #222;
+      padding: 32px;
+      border-radius: 12px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 12px;
+      background: #2a2a2a;
+      border: 1px solid #3a3a3a;
+      border-radius: 8px;
+      color: #fff;
+      font-family: inherit;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      outline: none;
+      border-color: #c4622e;
+    }
+    .form-btn {
+      width: 100%;
+      padding: 14px;
+      background: #c4622e;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .form-btn:hover { background: #b05528; }
+
+    footer {
+      background: #111;
+      padding: 60px 24px 30px;
+      border-top: 1px solid #2a2a2a;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; }
+    .footer-logo span { color: #c4622e; }
+    .footer-links { display: flex; gap: 30px; flex-wrap: wrap; }
+    .footer-links a { color: #666; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: #c4622e; }
+    .footer-bottom { text-align: center; padding-top: 30px; margin-top: 30px; border-top: 1px solid #2a2a2a; color: #555; font-size: 0.75rem; }
+
+    /* GDPR Cookie Banner */
+    .cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1a1a1a;
+      border-top: 1px solid #333;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      z-index: 1000;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .cookie-banner.show {
+      transform: translateY(0);
+    }
+    .cookie-banner p {
+      font-size: 0.8rem;
+      color: #9a9590;
+      margin: 0;
+      flex: 1;
+    }
+    .cookie-banner a {
+      color: #c4622e;
+      text-decoration: underline;
+    }
+    .cookie-buttons {
+      display: flex;
+      gap: 12px;
+    }
+    .cookie-accept {
+      background: #c4622e;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cookie-accept:hover {
+      background: #b05528;
+    }
+    .cookie-settings {
+      background: transparent;
+      color: #9a9590;
+      border: 1px solid #444;
+      padding: 10px 24px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cookie-settings:hover {
+      border-color: #c4622e;
+      color: #c4622e;
+    }
+
+    .cookie-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 1001;
+      align-items: center;
+      justify-content: center;
+    }
+    .cookie-modal-overlay.open {
+      display: flex;
+    }
+    .cookie-modal {
+      background: #222;
+      border-radius: 20px;
+      padding: 32px;
+      max-width: 500px;
+      width: 90%;
+      border: 1px solid #444;
+    }
+    .cookie-modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .cookie-modal p {
+      font-size: 0.85rem;
+      color: #9a9590;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .cookie-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #333;
+    }
+    .cookie-option:last-child {
+      border-bottom: none;
+    }
+    .cookie-option label {
+      font-size: 0.85rem;
+      color: #e8e6e1;
+      cursor: pointer;
+    }
+    .cookie-option input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #c4622e;
+    }
+    .cookie-option input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .cookie-modal-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .cookie-save {
+      flex: 1;
+      background: #c4622e;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .cookie-save-all {
+      flex: 1;
+      background: transparent;
+      color: #9a9590;
+      border: 1px solid #444;
+      padding: 12px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .cookie-save-all:hover {
+      border-color: #c4622e;
+      color: #c4622e;
+    }
+    .cookie-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #9a9590;
+    }
+
+    /* CART PANEL */
+    #cart-overlay {
+      position: fixed; inset: 0; z-index: 499;
+      background: rgba(0,0,0,0.55);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+    #cart-panel {
+      position: fixed; top: 0; right: -440px; width: 440px; height: 100vh;
+      z-index: 500; background: #1e1e1e;
+      border-left: 1px solid #333;
+      display: flex; flex-direction: column;
+      transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: -8px 0 40px rgba(0,0,0,0.5);
+    }
+    #cart-panel.open { right: 0; }
+    @media (max-width: 460px) { #cart-panel { width: 100%; right: -100%; } }
+
+    .cart-hd {
+      padding: 20px 24px; border-bottom: 1px solid #333;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cart-hd h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: #fff; font-weight: 700; }
+    .cart-x {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: #2a2a2a; color: #9a9590;
+      border: none; cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .cart-x:hover { background: #333; color: #fff; }
+
+    .cart-tabs {
+      display: flex; border-bottom: 1px solid #333;
+    }
+    .cart-tab {
+      flex: 1; padding: 14px; text-align: center;
+      font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: #666; border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s; cursor: default;
+    }
+    .cart-tab.active { color: #c4622e; border-bottom-color: #c4622e; }
+    .cart-tab.done { color: #9a9590; }
+
+    .cart-body { flex: 1; overflow-y: auto; padding: 24px; }
+
+    .cart-item {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 12px 0; border-bottom: 1px solid #2a2a2a; gap: 12px;
+    }
+    .cart-item:last-of-type { border-bottom: none; }
+    .cart-item-info strong { display: block; font-size: 0.875rem; color: #fff; margin-bottom: 2px; }
+    .cart-item-info span { font-size: 0.78rem; color: #9a9590; }
+    .cart-item-price { font-size: 0.875rem; color: #c4622e; font-weight: 700; white-space: nowrap; }
+    .cart-empty { text-align: center; padding: 40px 0; color: #666; font-size: 0.875rem; }
+
+    .cart-total-box {
+      margin-top: 16px; padding: 16px;
+      background: #252525; border-radius: 10px; border: 1px solid #333;
+    }
+    .cart-total-row { display: flex; justify-content: space-between; font-size: 0.85rem; color: #9a9590; margin-bottom: 8px; }
+    .cart-total-row.main { font-size: 1rem; color: #fff; font-weight: 700; margin-bottom: 0; padding-top: 10px; border-top: 1px solid #333; }
+    .cart-total-row.main span:last-child { color: #c4622e; }
+
+    .cart-drift-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin: 20px 0 12px; }
+    .cart-pkg-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+    .cart-pkg-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: #fff; }
+    .cart-change-pkg-btn {
+      background: none; border: 1px solid #444; color: #9a9590;
+      font-size: 0.72rem; padding: 5px 12px; border-radius: 20px;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .cart-change-pkg-btn:hover { border-color: #c4622e; color: #c4622e; }
+    .cart-pkg-dropdown {
+      background: #252525; border: 1px solid #333; border-radius: 10px;
+      overflow: hidden; margin-bottom: 14px; display: none;
+    }
+    .cart-pkg-dropdown.open { display: block; }
+    .cart-pkg-opt {
+      padding: 12px 14px; cursor: pointer; display: flex;
+      align-items: center; gap: 12px; border-bottom: 1px solid #2a2a2a;
+      transition: background 0.15s;
+    }
+    .cart-pkg-opt:last-child { border-bottom: none; }
+    .cart-pkg-opt:hover { background: #2e2e2e; }
+    .cart-pkg-opt.selected { background: rgba(196,98,46,0.08); }
+    .cart-pkg-radio {
+      width: 14px; height: 14px; border-radius: 50%;
+      border: 2px solid #444; flex-shrink: 0; transition: all 0.2s;
+    }
+    .cart-pkg-opt.selected .cart-pkg-radio { border-color: #c4622e; background: #c4622e; }
+    .cart-pkg-opt-label strong { display: block; font-size: 0.85rem; color: #fff; }
+    .cart-pkg-opt-label span { font-size: 0.75rem; color: #9a9590; }
+    .cart-drift-warn { font-size: 0.78rem; color: #e87171; margin-bottom: 12px; display: none; }
+    .cart-drift-warn.show { display: block; }
+
+    .cart-drift-opt {
+      border: 1px solid #2a2a2a; border-radius: 8px;
+      padding: 12px 14px; margin-bottom: 10px; cursor: pointer;
+      display: flex; align-items: center; gap: 12px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .cart-drift-opt:hover { border-color: #444; background: #252525; }
+    .cart-drift-opt.selected { border-color: #c4622e; background: rgba(196,98,46,0.08); }
+    .cart-drift-opt.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+    .drift-radio {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid #444; flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .cart-drift-opt.selected .drift-radio { border-color: #c4622e; background: #c4622e; }
+    .drift-opt-label strong { display: block; font-size: 0.875rem; color: #fff; }
+    .drift-opt-label span { font-size: 0.75rem; color: #9a9590; }
+
+    /* Step 2 form */
+    .cart-form-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 16px; }
+    .cart-fg { margin-bottom: 14px; }
+    .cart-fg label { display: block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #666; margin-bottom: 6px; }
+    .cart-fg input, .cart-fg textarea {
+      width: 100%; padding: 10px 14px;
+      background: #252525; border: 1px solid #333;
+      border-radius: 8px; color: #e8e6e1; font: inherit; font-size: 0.875rem;
+      outline: none; resize: vertical;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .cart-fg input:focus, .cart-fg textarea:focus { border-color: #c4622e; box-shadow: 0 0 0 3px rgba(196,98,46,0.12); }
+    .cart-fg input::placeholder, .cart-fg textarea::placeholder { color: #555; }
+    .cart-fg.err input, .cart-fg.err textarea { border-color: #e87171; }
+    .cart-fg .fg-err { font-size: 0.75rem; color: #e87171; margin-top: 4px; display: none; }
+    .cart-fg.err .fg-err { display: block; }
+    .cart-success { display: none; padding: 14px; border-radius: 8px; background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); text-align: center; font-size: 0.875rem; color: #86efac; margin-bottom: 12px; }
+
+    .cart-ft { padding: 16px 24px; border-top: 1px solid #333; }
+    .cart-btn-main {
+      width: 100%; padding: 13px;
+      background: #c4622e; color: #fff;
+      border: none; border-radius: 40px;
+      font-weight: 600; font-size: 0.9rem; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .cart-btn-main:hover { background: #b05528; transform: translateY(-1px); }
+    .cart-btn-main:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .cart-btn-back { width: 100%; padding: 10px; background: none; border: none; color: #666; font-size: 0.85rem; cursor: pointer; margin-top: 8px; transition: color 0.2s; }
+    .cart-btn-back:hover { color: #9a9590; }
+
+    #cart-fab {
+      position: fixed; bottom: 80px; right: 24px; z-index: 400;
+      background: #c4622e; color: #fff;
+      border: none; border-radius: 40px;
+      padding: 11px 20px; font-weight: 600; font-size: 0.875rem;
+      cursor: pointer; display: none; align-items: center; gap: 8px;
+      box-shadow: 0 4px 20px rgba(196,98,46,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #cart-fab.show { display: flex; }
+    #cart-fab:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(196,98,46,0.4); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-btn { display: block; }
+      .about-inner, .contact-inner { grid-template-columns: 1fr; }
+      .hero { text-align: center; }
+      .hero p { margin-left: auto; margin-right: auto; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .cookie-banner { flex-direction: column; text-align: center; }
+    }
+
+/* === Info popover (i) === */
+.has-info { position: relative; }
+.info-btn {
+  position: absolute; top: 10px; right: 10px;
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid #d6cfc2; background: #fff; color: #1a1a1a;
+  font-family: 'Cormorant Garamond', serif; font-weight: 700; font-style: italic;
+  font-size: 0.95rem; line-height: 1; cursor: pointer; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  z-index: 5; transition: all 0.15s ease;
+}
+.info-btn:hover { background: #c4622e; color: #fff; border-color: #c4622e; }
+.info-btn[aria-expanded="true"] { background: #c4622e; color: #fff; border-color: #c4622e; }
+.info-pop {
+  position: absolute; top: 44px; right: 10px; left: 10px;
+  background: #1a1a1a; color: #f5f0e8;
+  padding: 14px 16px; border-radius: 10px;
+  font-size: 0.82rem; line-height: 1.55;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+  z-index: 6; display: none;
+}
+.info-pop.open { display: block; animation: infoPopIn 0.15s ease; }
+@keyframes infoPopIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.info-pop strong { color: #f0c074; }
+
+/* === Stretched link on demo card === */
+.card-stretched-link {
+  position: absolute; inset: 0; z-index: 1;
+  font-size: 0; color: transparent; text-indent: -9999px; overflow: hidden;
+}
+.port-card-clickable { position: relative; }
+.port-card-clickable .port-body, .port-card-clickable .port-thumb { position: relative; }
+.port-card-clickable .card-inner-link, .port-card-clickable .info-btn, .port-card-clickable .info-pop { position: relative; z-index: 4; }
+.port-card-clickable .info-btn { position: absolute; }
+.port-card-clickable .info-pop { position: absolute; }
+
+/* === Native FAQ details === */
+.faq-item-d {
+  border-bottom: 1px solid #e0d9cc;
+  background: #fff;
+}
+.faq-item-d:last-child { border-bottom: none; }
+.faq-item-d > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 24px;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-weight: 600; color: #1a1a1a;
+  transition: background 0.2s;
+}
+.faq-item-d > summary::-webkit-details-marker { display: none; }
+.faq-item-d > summary::after {
+  content: '+'; font-size: 1.4rem; color: #c4622e; line-height: 1; flex-shrink: 0;
+}
+.faq-item-d[open] > summary::after { content: '−'; }
+.faq-item-d > summary:hover { background: #f5f0e8; }
+.faq-item-d .faq-a-body {
+  padding: 0 24px 20px;
+  color: #5a5550; font-size: 0.9rem; line-height: 1.7;
+}
+
+  </style>
+  <link rel="canonical" href="https://lkwd.se/" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231a1a1a'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='700' text-anchor='middle' fill='%23c4622e'%3ELK%3C/text%3E%3C/svg%3E" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LKWD.se" />
+  <meta property="og:title" content="LKWD.se — Hemsidor för lokala företag i Stockholm" />
+  <meta property="og:description" content="Jag bygger hemsidor för lokala företag i Stockholm och Stockholmsområdet. Tydliga priser, inga dolda kostnader. Från 4 990 kr." />
+  <meta property="og:url" content="https://lkwd.se/" />
+  <meta property="og:locale" content="sv_SE" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="LKWD.se — Hemsidor för lokala företag i Stockholm" />
+  <meta name="twitter:description" content="Hemsidor för lokala företag. Tydliga priser, du äger allt. Från 4 990 kr." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "LKWD.se — Leon Kolanj Webb & Utveckling",
+    "image": "https://lkwd.se/images/og-cover.jpg",
+    "url": "https://lkwd.se/",
+    "telephone": "+46728510936",
+    "email": "leon@lkwd.se",
+    "priceRange": "4990 SEK – 14900 SEK",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Stockholm",
+      "addressRegion": "Stockholm",
+      "addressCountry": "SE"
+    },
+    "areaServed": "Stockholm",
+    "founder": { "@type": "Person", "name": "Leon Kolanj" }
+  }
+  </script>
+
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <a href="#" class="logo">LK<span>WD</span></a>
+    <div class="nav-links">
+      <a href="#tjanster">Tjänster</a>
+      <a href="#arbeten">Arbeten</a>
+      <a href="#priser">Priser</a>
+      <a href="#om">Om oss</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <a href="#kontakt" class="nav-cta">Starta projekt</a>
+    <button class="mobile-btn" id="mobileBtn">☰</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <h1>Hemsidor för<br>lokala företag.<br><span>Byggt rätt.</span></h1>
+      <p>Inget krångel, inga dolda priser. Bara en professionell hemsida som fungerar — och som du äger helt och hållet.</p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <a href="#kontakt" class="btn btn-primary">Starta ditt projekt →</a>
+        <a href="#priser" class="btn btn-outline">Se priser</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tjanster">
+  <div class="container">
+    <div class="section-tag">Vad jag erbjuder</div>
+    <h2 class="section-title">Allt du behöver. Inget onödigt.</h2>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon">📄</div><h3>Skräddarsydda hemsidor</h3><p>Byggda från grunden – inga mallar, inget trams.</p></div>
+      <div class="service-card"><div class="service-icon">📱</div><h3>Mobiloptimerat</h3><p>Ser perfekt ut på telefon, surfplatta och dator.</p></div>
+      <div class="service-card"><div class="service-icon">⚡</div><h3>Snabbt & säkert</h3><p>Laddar snabbt. Google gillar det också.</p></div>
+      <div class="service-card"><div class="service-icon">🌐</div><h3>Domän & drift</h3><p>Jag fixar allt tekniskt — domän, hosting, e-post.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="arbeten" class="portfolio-section">
+  <div class="container">
+    <div class="section-tag" style="color: #c4622e;">Exempel på hemsidor</div>
+    <h2 class="section-title" style="color: #1a1a1a;">Verkliga projekt. Riktiga resultat.</h2>
+
+    <div class="portfolio-category">
+      <h3>⭐ Demo & Paket-hemsidor (levande exempel)</h3>
+      <div class="portfolio-grid">
+        <div class="port-card port-card-clickable" data-info="<strong>Live-demo:</strong> Detta är en riktig fungerande hemsida, exakt som du får den. Klicka var som helst på kortet för att öppna demon i ny flik. Admin-panelen testar du genom att lägga till #admin i URL:en (lösenord: cafe2025).">
+          <a href="produkt/cafe-webb/" class="card-stretched-link" aria-label="Läs mer om café-webben">Läs mer om café-webben</a>
+          <div class="port-thumb">
+            <img src="images/cafe-solna-preview.jpg" alt="Skärmbild av live-demo: Café Solna hemsida med meny och admin-panel" loading="lazy">
+            <span class="port-status tag-live">Live demo</span>
+          </div>
+          <div class="port-body">
+            <h3>Café Solna — Basic-paketet</h3>
+            <p>Kaffe, bakverk & lunch. Meny med märkningar, admin-panel, kontaktformulär och karta.</p>
+            <span class="package-badge">⭐ Basic-paketet · 4 990 kr</span>
+            <span class="package-badge package-badge-green">⚙️ Admin-panel ingår</span>
+            <div style="display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap;">
+              <a href="produkt/cafe-webb/" class="port-link card-inner-link">📖 Läs mer om café-webben →</a>
+			  <a href="cafe-solna-demo/" target="_blank" rel="noopener" class="port-link card-inner-link">🎯 Testa demo →</a>
+              <a href="#priser" class="port-link card-inner-link" style="color: #c4622e;" id="cafeBestallLink">Beställ från 4 990 kr →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="port-card">
+          <div class="port-thumb">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=340&fit=crop" alt="Illustrationsbild för kommande restaurangprojekt (exempel)" loading="lazy">
+            <span class="port-status">Kommer snart</span>
+          </div>
+          <div class="port-body">
+            <h3>Restaurang Väsby — Premium (Node.js)</h3>
+            <p>Meny online, bordssystem, bildgalleri och kontakt. Modern teknik med hög säkerhet.</p>
+            <span class="package-badge">⭐ Premium · 9 900 kr</span>
+            <span class="package-badge">⚡ Kräver Premium drift</span>
+            <span class="port-link" style="color: #999;">Under arbete — förbokningsbar</span>
+          </div>
+        </div>
+
+        <div class="port-card">
+          <div class="port-thumb">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=340&fit=crop" alt="Illustrationsbild för kommande salongsprojekt (exempel)" loading="lazy">
+            <span class="port-status">Kommer snart</span>
+          </div>
+          <div class="port-body">
+            <h3>Salong Kista — Proffs</h3>
+            <p>Prislista, onlinebokning, bildgalleri och om-sida. Kunderna bokar — du klipper.</p>
+            <span class="package-badge">🛍️ Proffs · från 14 900 kr</span>
+            <span class="package-badge">📅 Bokningssystem</span>
+            <span class="port-link" style="color: #999;">Under arbete — förbokningsbar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-category" style="margin-top: 60px;">
+      <h3>🚀 Aktiva hemsidor (riktiga kunder)</h3>
+      <div class="portfolio-grid">
+        <div class="port-card">
+          <div class="port-thumb">
+            <img src="images/motor-mutter-preview.jpg" alt="Skärmbild av Motor Mutter — verkstadshemsida byggd av LKWD" loading="lazy">
+            <span class="port-status tag-live">Live</span>
+          </div>
+          <div class="port-body">
+            <h3>Motor Mutter — Verkstad</h3>
+            <p>Från ventiljustering till komplett motoröversyn. Profil, tjänster, priser och kontakt.</p>
+            <span class="package-badge">⭐ Basic-paketet · 4 990 kr</span>
+            <a href="https://motormutter.se" target="_blank" class="port-link">Se hemsidan →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRISER -->
+<section id="priser">
+  <div class="container">
+    <div class="section-tag">Tydliga priser</div>
+    <h2 class="section-title">Välj ditt paket</h2>
+    
+    <div class="pricing-grid" id="pricingGrid">
+
+      <!-- BASIC (PHP) CARD -->
+      <div class="price-card" id="basicCard" data-info="Basic-paketet (PHP) passar caféer, frisörer och mindre verksamheter som vill ha en proffsig sajt utan månadskostnad för plattformen. Du får en handbyggd hemsida, admin-panel, kontaktformulär och Google Maps. Tekniken är PHP — beprövad, stabil och fungerar på i princip all hosting. Med <strong>Basic drift</strong> får du alla filer och väljer egen hosting (t.ex. Loopia)." data-pkg="Basic (4 990 kr)" style="cursor:pointer">
+        <div class="price-head">
+          <h3>Basic (PHP)</h3>
+          <div class="price-amount">4 990 <small>kr exkl. moms</small></div>
+          <div class="price-for">Perfekt för caféer, frisörer & mindre verksamheter</div>
+        </div>
+        <div class="price-body">
+          <ul class="price-features">
+            <li>1–3 sidor (hem, om, kontakt)</li>
+            <li>Admin-panel för enkel redigering</li>
+            <li>Kontaktformulär & Google Maps</li>
+            <li>Mobiloptimerad (responsiv)</li>
+            <li>Grundläggande SEO</li>
+            <li class="no">Inbyggd användarhantering</li>
+            <li class="no">Webshop-funktionalitet</li>
+          </ul>
+          <button class="price-cta" id="basicCta">Välj Basic →</button>
+        </div>
+      </div>
+
+      <!-- BASIC+ (Node.js) CARD -->
+      <div class="price-card" id="basicPlusCard" data-info="Basic+ är vår instegsnivå på <strong>Node.js</strong> — samma moderna teknik som Netflix och Uber bygger med. Snabbare laddning, högre säkerhet (JWT-tokens, bcrypt-lösenord) och inloggningssystem för personal. Kräver Premium drift eftersom Node.js behöver en server som alltid är igång." data-pkg="Basic+ (6 990 kr)" style="cursor:pointer">
+        <div class="price-head">
+          <h3>Basic+ (Node.js)</h3>
+          <div class="price-amount">6 990 <small>kr exkl. moms</small></div>
+          <div class="price-for">För växande företag som vill ha modern teknik</div>
+        </div>
+        <div class="price-body">
+          <ul class="price-features">
+            <li>3–5 sidor, skalbart & framtidssäkert</li>
+            <li>Allt från Basic-paketet</li>
+            <li>Modern teknik (Node.js + MongoDB)</li>
+            <li>Hög säkerhet (JWT, bcrypt)</li>
+            <li>Inloggningssystem för personal</li>
+            <li>Galleri & tjänstesida</li>
+          </ul>
+          <div class="drift-required">⚠️ Kräver Premium drift (395 kr/mån)</div>
+          <button class="price-cta" id="basicPlusCta">Välj Basic+ →</button>
+        </div>
+      </div>
+
+      <!-- PREMIUM CARD -->
+      <div class="price-card featured" id="premiumCard" data-info="Premium är den vanligaste nivån för butiker, verkstäder och växande företag. Du får 5–10 sidor med full kontroll: galleri, prislista, tjänstesida och inloggning för personal. Byggt på <strong>Node.js + MongoDB</strong> vilket gör att sajten skalar bra när du växer.">
+        <div class="price-popular">⭐ Populärast</div>
+        <div class="price-head">
+          <h3>Premium (Node.js)</h3>
+          <div class="price-amount">9 900 <small>kr exkl. moms</small></div>
+          <div class="price-for">För butiker, verkstäder & växande företag</div>
+        </div>
+        <div class="price-body">
+          <ul class="price-features">
+            <li>5–10 sidor, skalbart & framtidssäkert</li>
+            <li>Allt från Basic-paketet</li>
+            <li>Modern teknik (Node.js + MongoDB)</li>
+            <li>Hög säkerhet (JWT, bcrypt)</li>
+            <li>Inloggningssystem för personal</li>
+            <li>Galleri, priser & tjänstesida</li>
+            <li class="no">Webshop eller bokningssystem (tillägg)</li>
+          </ul>
+          <div class="drift-required">⚠️ Kräver Premium drift (395 kr/mån)</div>
+          <button class="price-cta" id="premiumCta">Välj Premium →</button>
+        </div>
+      </div>
+
+      <!-- PROFFS CARD -->
+      <div class="price-card" id="proffsCard" data-info="Proffs är för dig som behöver <strong>e-handel eller bokning</strong>. Inkluderar betalningsintegration (Swish, kort) och order-/bokningshantering. Pris från 14 900 kr — slutsumman beror på antal produkter och hur avancerat bokningsflöde du vill ha. Vi ger alltid en fast offert innan vi börjar.">
+        <div class="price-head">
+          <h3>Proffs</h3>
+          <div class="price-amount">från 14 900 <small>kr exkl. moms</small></div>
+          <div class="price-for">E-handel, bokningssystem, medlemsportaler</div>
+        </div>
+        <div class="price-body">
+          <ul class="price-features">
+            <li>Allt från Premium-paketet (Node.js)</li>
+            <li>Webshop (upp till 25 produkter) ELLER bokningssystem</li>
+            <li>Betalningsintegration (Swish, kort)</li>
+            <li>Order- och bokningshantering</li>
+            <li class="no">Extra produkter: +200 kr/produkt efter 25</li>
+          </ul>
+          <div class="drift-required">⚠️ Kräver Proffs drift (595 kr/mån)</div>
+          <button class="price-cta" id="proffsCta">Begär offert →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRIFT PAKET -->
+    <div style="margin-top: 60px;">
+      <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 16px;">Löpande drift — Välj din nivå</h3>
+      <p style="color: #9a9590; margin-bottom: 32px;">Efter lansering kan du sköta allt själv, eller låta mig ta hand om det.</p>
+      
+      <div class="drift-grid">
+        <div class="drift-card" id="basicDriftCard" data-info="Basic drift = du sköter allt själv. Vi levererar alla filer vid lansering, du väljer hosting (t.ex. Loopia eller One.com — ca 50–100 kr/mån). Passar bara <strong>Basic (PHP)</strong> eftersom Node.js-paketen behöver en server som körs dygnet runt.">
+          <h4>Basic drift</h4>
+          <div class="drift-price">0 <small>kr/mån</small></div>
+          <ul class="drift-features">
+            <li class="yes">Du får alla filer vid lansering</li>
+            <li class="yes">Passar för Basic (PHP) paketet</li>
+            <li class="yes">Du väljer egen hosting (t.ex. Loopia, One.com)</li>
+            <li class="no">Ingen domänhantering från mig</li>
+            <li class="no">Ingen backup</li>
+            <li class="no">Inga uppdateringar</li>
+          </ul>
+        </div>
+
+        <div class="drift-card featured" id="premiumDriftCard" data-info="Premium drift är vad de flesta väljer. Vi tar hand om domän, hosting, daglig backup och säkerhetsuppdateringar. Du får också en e-postadress på din domän (info@dindomän.se) och prioriterad support inom 24 timmar. <strong>Krävs för alla Node.js-paket.</strong>">
+          <div class="drift-badge">⭐ Populärast</div>
+          <h4 style="margin-top: 16px;">Premium drift</h4>
+          <div class="drift-price">395 <small>kr/mån</small></div>
+          <ul class="drift-features">
+            <li class="yes">Domänhantering (jag fixar, du äger)</li>
+            <li class="yes">Hosting på stabil VPS</li>
+            <li class="yes">Daglig backup & säkerhetskopiering</li>
+            <li class="yes">Uppdateringar 1 tim/mån</li>
+            <li class="yes">E-postadress (info@dindomän.se)</li>
+            <li class="yes">Prioriterad support (svar inom 24h)</li>
+            <li class="yes"><strong>Krävs för Node.js-paket</strong></li>
+          </ul>
+        </div>
+
+        <div class="drift-card" id="proffsDriftCard" data-info="Proffs drift är för dig som vill ha en helhetslösning. Allt i Premium plus 2 timmar/månad för uppdateringar (text, bild, layout), månadsrapport med besöksstatistik, löpande SEO-justeringar och en konsultation per kvartal.">
+          <h4>Proffs drift</h4>
+          <div class="drift-price">595 <small>kr/mån</small></div>
+          <ul class="drift-features">
+            <li class="yes">Allt i Premium drift</li>
+            <li class="yes">Uppdateringar 2 tim/mån (text, bild, layout)</li>
+            <li class="yes">Veckobaserad backup</li>
+            <li class="yes">Månadsrapport med statistik</li>
+            <li class="yes">SEO-justeringar löpande</li>
+            <li class="yes">Konsultation 1 gång/kvartal (30 min)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: #f5f0e8;">
+  <div class="container">
+    <div class="section-tag" style="color: #c4622e;">Hur vi jobbar</div>
+    <h2 class="section-title" style="color: #1a1a1a;">Enkelt. Tryggt. Inga överraskningar.</h2>
+    <div class="process-steps">
+      <div class="step"><div class="step-num">1</div><h3>Vi pratar</h3><p>Digitalt möte — jag lyssnar och ger en tydlig offert.</p></div>
+      <div class="step"><div class="step-num">2</div><h3>Jag bygger</h3><p>Från grunden. Löpande uppdateringar till dig.</p></div>
+      <div class="step"><div class="step-num">3</div><h3>Lanserar</h3><p>Du godkänner, jag lanserar. Du äger allt.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="om">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-text">
+        <div class="section-tag">Om oss</div>
+        <h2 class="section-title">Vi på LKWD.</h2>
+        <p>Vi på LKWD startade med en enkel frustration: lokala företag i Stockholm betalade tiotusentals kronor för hemsidor som var långsamma, svåra att uppdatera och låsta till byråer som inte svarade i tid.</p>
+        <p>Så vi bestämde oss för att göra det annorlunda. <strong>Handbyggda hemsidor, tydliga priser och en direkt kontakt</strong> — utan mellanhänder, utan dolda kostnader och utan månadsavgifter som växer i tysthet.</p>
+        <p>Idag bygger vi hemsidor för caféer, restauranger, salonger och hantverkare runt om i Stockholmsområdet. Varje projekt börjar med ett samtal och slutar med en sida som du själv äger — domän, kod och innehåll.</p>
+        <p>Din hemsida ska fungera — och du ska känna dig trygg med den.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-label" style="color: #c4622e; margin-bottom: 16px;">// Varför LKWD</div>
+        <div class="about-pts">
+          <div class="about-pt"><div class="about-pt-icon">📍</div><div><strong>Lokal förståelse</strong><br><span>Stockholmsmarknaden</span></div></div>
+          <div class="about-pt"><div class="about-pt-icon">💰</div><div><strong>Tydliga priser</strong><br><span>Inga dolda kostnader</span></div></div>
+          <div class="about-pt"><div class="about-pt-icon">🔒</div><div><strong>Du äger allt</strong><br><span>Domän, kod, innehåll</span></div></div>
+          <div class="about-pt"><div class="about-pt-icon">⏱️</div><div><strong>Svar inom 24h</strong><br><span>Alltid, ingen kö</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq-section">
+  <div class="container">
+    <div class="section-tag" style="color: #c4622e;">Vanliga frågor</div>
+    <h2 class="section-title" style="color: #1a1a1a;">Frågor & svar</h2>
+    <div class="faq-list">
+      <details class="faq-item-d"><summary>Hur lång tid tar det att bygga en hemsida?</summary><div class="faq-a-body">2–4 veckor beroende på storlek och hur snabbt du kan ge mig material. Jag håller dig uppdaterad löpande.</div></details>
+      <details class="faq-item-d"><summary>Kan jag uppdatera hemsidan själv?</summary><div class="faq-a-body">Ja! Admin-panel ingår i alla paket. Du kan enkelt ändra text, priser och bilder utan teknisk kunskap.</div></details>
+      <details class="faq-item-d"><summary>Vad är Node.js och varför är det bättre?</summary><div class="faq-a-body">Node.js är en modern teknik som används av Netflix, Uber och LinkedIn. Det ger snabbare laddning, högre säkerhet och bättre skalbarhet. <a href="why-nodejs.html" class="read-more-btn">Läs mer om Node.js →</a></div></details>
+      <details class="faq-item-d"><summary>Vad händer om vi avslutar samarbetet?</summary><div class="faq-a-body">Du äger allt — domänen, koden, innehållet. Vill du avsluta lämnar jag över alla filer inom 14 dagar utan krångel.</div></details>
+      <details class="faq-item-d"><summary>Syns min hemsida på Google?</summary><div class="faq-a-body">Ja. Jag bygger med SEO-grunderna — rätt rubriker, metabeskrivningar, snabb laddning och korrekt struktur.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="container">
+    <div class="contact-inner">
+      <div>
+        <div class="section-tag">Kom igång</div>
+        <h2 class="section-title">Starta ditt projekt</h2>
+        <p>Berätta om din verksamhet. Ingen förpliktelse, inget krångel. Jag återkommer inom 24 timmar med en tydlig offert.</p>
+        <div class="contact-det">📧 <a href="mailto:leon@lkwd.se">leon@lkwd.se</a></div>
+        <div class="contact-det">📞 <a href="tel:+46728510936">+46 72 851 09 36</a></div>
+        <div class="contact-det">📍 Stockholm — digitala möten (video/telefon)</div>
+        <div class="response-tag" style="margin-top: 24px; display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; background: #4ade80; border-radius: 50%; display: inline-block;"></span> Tillgänglig — svarar inom 24 timmar</div>
+      </div>
+      <div class="contact-form">
+        <form netlify name="lkwd-kontakt" netlify-honeypot="bot-field" method="POST">
+          <input type="hidden" name="form-name" value="lkwd-kontakt">
+          
+          <div class="form-group">
+            <input type="text" name="namn" placeholder="Ditt namn" id="contactName" required>
+          </div>
+          <div class="form-group">
+            <input type="email" name="epost" placeholder="Din e-post" id="contactEmail" required>
+          </div>
+          <div class="form-group">
+            <select name="paket" id="paketSelect">
+              <option value="">Välj paket (valfritt)</option>
+              <option value="Basic (4 990 kr)">Basic (PHP) — 4 990 kr</option>
+              <option value="Basic+ (6 990 kr)">Basic+ (Node.js) — 6 990 kr</option>
+              <option value="Premium (9 900 kr)">Premium (Node.js) — 9 900 kr</option>
+              <option value="Proffs (från 14 900 kr)">Proffs — från 14 900 kr</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <select name="drift" id="driftSelect">
+              <option value="">Välj driftpaket (valfritt)</option>
+              <option value="Basic drift (0 kr/mån)">Basic drift — 0 kr/mån</option>
+              <option value="Premium drift (395 kr/mån)">Premium drift — 395 kr/mån</option>
+              <option value="Proffs drift (595 kr/mån)">Proffs drift — 595 kr/mån</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <textarea name="meddelande" rows="4" placeholder="Berätta om din verksamhet..." required></textarea>
+          </div>
+          <div style="display: none;">
+            <input type="text" name="bot-field">
+          </div>
+          <button type="submit" class="form-btn" id="submitButton">Skicka meddelande</button>
+        </form>
+        <div id="formSuccess" style="display: none; margin-top: 16px; padding: 12px; background: #2a5a3a; border-radius: 8px; text-align: center;">✓ Tack! Jag återkommer inom 24 timmar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">LK<span>WD</span>.se</div>
+    <div class="footer-links">
+      <a href="#tjanster">Tjänster</a>
+      <a href="#arbeten">Arbeten</a>
+      <a href="#priser">Priser</a>
+      <a href="#om">Om oss</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="#" id="privacyLink">Integritetspolicy</a>
+      <a href="#" id="cookieSettingsFooter">Cookie-inställningar</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> LKWD.se — Leon Kolanj Webb & Utveckling</p>
+  </div>
+</footer>
+
+<!-- GDPR Cookie Banner -->
+<div class="cookie-banner" id="cookieBanner">
+  <p>Vi använder cookies för att ge dig bästa upplevelsen på vår webbplats. Genom att fortsätta använda sidan godkänner du vår <a href="#" id="cookiePrivacyLink">integritetspolicy</a>.</p>
+  <div class="cookie-buttons">
+    <button class="cookie-settings" id="cookieSettingsBtn">Inställningar</button>
+    <button class="cookie-accept" id="cookieAcceptBtn">Acceptera cookies</button>
+  </div>
+</div>
+
+<!-- GDPR Cookie Modal -->
+<div class="cookie-modal-overlay" id="cookieModal">
+  <div class="cookie-modal">
+    <span class="cookie-close" id="cookieModalClose">&times;</span>
+    <h3>Cookie-inställningar</h3>
+    <p>Vi använder cookies för att förbättra din upplevelse på vår webbplats. Nödvändiga cookies är alltid aktiva för att webbplatsen ska fungera korrekt.</p>
+    
+    <div class="cookie-option">
+      <label>Nödvändiga cookies</label>
+      <input type="checkbox" id="cookieNecessary" checked disabled>
+    </div>
+    <div class="cookie-option">
+      <label>Statistik-cookies (Google Analytics)</label>
+      <input type="checkbox" id="cookieStats">
+    </div>
+    <div class="cookie-option">
+      <label>Marknadsföringscookies</label>
+      <input type="checkbox" id="cookieMarketing">
+    </div>
+    
+    <div class="cookie-modal-buttons">
+      <button class="cookie-save-all" id="cookieAcceptAll">Acceptera alla</button>
+      <button class="cookie-save" id="cookieSavePrefs">Spara inställningar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Hidden static form so Netlify auto-detects the offert submission at build time -->
+<form name="lkwd-offert" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="namn" />
+  <input type="email" name="epost" />
+  <input type="tel" name="telefon" />
+  <input type="text" name="paket" />
+  <input type="text" name="drift" />
+  <input type="text" name="totalt" />
+  <textarea name="meddelande"></textarea>
+  <input type="text" name="bot-field" />
+</form>
+
+<!-- CART OVERLAY -->
+<div id="cart-overlay"></div>
+
+<!-- CART FAB -->
+<button id="cart-fab" aria-label="Öppna offert">🛒 <span id="cart-fab-label">Din offert</span></button>
+
+<!-- CART PANEL -->
+<div id="cart-panel" role="dialog" aria-modal="true" aria-label="Offertpanel">
+  <div class="cart-hd">
+    <h3>Din offert</h3>
+    <button class="cart-x" id="cart-close">✕</button>
+  </div>
+  <div class="cart-tabs">
+    <div class="cart-tab active" id="ctab1">1. Sammanfattning</div>
+    <div class="cart-tab" id="ctab2">2. Skicka förfrågan</div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="cart-body" id="cstep1">
+    <div class="cart-pkg-row">
+      <div class="cart-pkg-title">Webbpaket</div>
+      <button class="cart-change-pkg-btn" id="cart-change-pkg-btn">✏️ Ändra webbpaket</button>
+    </div>
+    <div class="cart-pkg-dropdown" id="cart-pkg-dropdown">
+      <div class="cart-pkg-opt" data-pkg="Basic (4 990 kr)" data-price="4 990 kr"><div class="cart-pkg-radio"></div><div class="cart-pkg-opt-label"><strong>Basic (PHP)</strong><span>4 990 kr</span></div></div>
+      <div class="cart-pkg-opt" data-pkg="Basic+ (6 990 kr)" data-price="6 990 kr"><div class="cart-pkg-radio"></div><div class="cart-pkg-opt-label"><strong>Basic+ (Node.js)</strong><span>6 990 kr</span></div></div>
+      <div class="cart-pkg-opt" data-pkg="Premium (9 990 kr)" data-price="9 990 kr"><div class="cart-pkg-radio"></div><div class="cart-pkg-opt-label"><strong>Premium (Node.js)</strong><span>9 990 kr</span></div></div>
+      <div class="cart-pkg-opt" data-pkg="Proffs (från 14 990 kr)" data-price="från 14 990 kr"><div class="cart-pkg-radio"></div><div class="cart-pkg-opt-label"><strong>Proffs</strong><span>från 14 990 kr</span></div></div>
+    </div>
+    <div class="cart-drift-title">Välj driftpaket</div>
+    <div class="cart-drift-warn" id="cart-drift-warn">⚠️ Basic+ kräver minst Premium drift</div>
+    <div class="cart-drift-opt" data-drift="Basic drift" data-monthly="0"><div class="drift-radio"></div><div class="drift-opt-label"><strong>Basic drift — 0 kr/mån</strong><span>Du sköter hosting själv</span></div></div>
+    <div class="cart-drift-opt" data-drift="Premium drift" data-monthly="395"><div class="drift-radio"></div><div class="drift-opt-label"><strong>Premium drift — 395 kr/mån</strong><span>Domän, hosting, backup, e-post, VPS</span></div></div>
+    <div class="cart-drift-opt" data-drift="Proffs drift" data-monthly="595"><div class="drift-radio"></div><div class="drift-opt-label"><strong>Proffs drift — 595 kr/mån</strong><span>Allt i Premium + statistik, SEO, konsultation</span></div></div>
+
+    <div style="margin-top:20px">
+      <div id="cart-items"></div>
+      <div id="cart-total-wrap" style="display:none"><div class="cart-total-box" id="cart-total"></div></div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="cart-body" id="cstep2" style="display:none">
+    <div class="cart-form-title">Skicka offertförfrågan</div>
+    <div class="cart-success" id="cart-success">✓ Förfrågan skickad! Jag återkommer inom 24 timmar.</div>
+    <form id="cart-form" novalidate>
+      <div class="cart-fg" id="cfg-n"><label>Ditt namn</label><input type="text" id="cfn" placeholder="Anna Svensson" autocomplete="name" /><div class="fg-err">Ange ditt namn.</div></div>
+      <div class="cart-fg" id="cfg-e"><label>E-postadress</label><input type="email" id="cfe" placeholder="du@dindomän.se" autocomplete="email" /><div class="fg-err">Ange en giltig e-postadress.</div></div>
+      <div class="cart-fg"><label>Telefon (valfritt)</label><input type="tel" id="cftel" placeholder="+46 72 851 09 36" autocomplete="tel" /></div>
+      <div class="cart-fg" id="cfg-m"><label>Meddelande</label><textarea id="cfm" rows="4" placeholder="Berätta om din verksamhet..."></textarea><div class="fg-err">Berätta kort om vad du behöver.</div></div>
+    </form>
+  </div>
+
+  <div class="cart-ft">
+    <button class="cart-btn-main" id="cart-next" disabled>Välj driftpaket för att gå vidare →</button>
+    <button class="cart-btn-back" id="cart-back" style="display:none">← Tillbaka</button>
+  </div>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // GDPR Cookie Management
+  const cookieBanner = document.getElementById('cookieBanner');
+  const cookieModal = document.getElementById('cookieModal');
+  const acceptBtn = document.getElementById('cookieAcceptBtn');
+  const settingsBtn = document.getElementById('cookieSettingsBtn');
+  const acceptAllBtn = document.getElementById('cookieAcceptAll');
+  const savePrefsBtn = document.getElementById('cookieSavePrefs');
+  const modalClose = document.getElementById('cookieModalClose');
+  const statsCheckbox = document.getElementById('cookieStats');
+  const marketingCheckbox = document.getElementById('cookieMarketing');
+
+  function closeModal() { cookieModal.classList.remove('open'); }
+  function openModal() { cookieModal.classList.add('open'); }
+
+  function saveCookiePrefs(stats, marketing) {
+    localStorage.setItem('cookieStats', stats);
+    localStorage.setItem('cookieMarketing', marketing);
+    localStorage.setItem('cookiesAccepted', 'true');
+    cookieBanner.classList.remove('show');
+    closeModal();
+  }
+  function loadSavedPrefs() {
+    statsCheckbox.checked = localStorage.getItem('cookieStats') === 'true';
+    marketingCheckbox.checked = localStorage.getItem('cookieMarketing') === 'true';
+  }
+  if (!localStorage.getItem('cookiesAccepted')) {
+    setTimeout(() => cookieBanner.classList.add('show'), 1000);
+  } else { loadSavedPrefs(); }
+
+  acceptBtn.addEventListener('click', () => saveCookiePrefs(true, true));
+  acceptAllBtn.addEventListener('click', () => saveCookiePrefs(true, true));
+  settingsBtn.addEventListener('click', () => { loadSavedPrefs(); openModal(); });
+  savePrefsBtn.addEventListener('click', () => saveCookiePrefs(statsCheckbox.checked, marketingCheckbox.checked));
+  modalClose.addEventListener('click', closeModal);
+  cookieModal.addEventListener('click', (e) => { if (e.target === cookieModal) closeModal(); });
+
+  const privacyLinks = document.querySelectorAll('#privacyLink, #cookiePrivacyLink');
+  privacyLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Integritetspolicy: Vi samlar endast in information som du själv lämnar via kontaktformuläret. Vi säljer aldrig dina uppgifter till tredje part. För frågor, kontakta leon@lkwd.se');
+    });
+  });
+
+  const cookieSettingsFooter = document.getElementById('cookieSettingsFooter');
+  if (cookieSettingsFooter) {
+    cookieSettingsFooter.addEventListener('click', (e) => { e.preventDefault(); loadSavedPrefs(); openModal(); });
+  }
+
+  // CONTACT FORM
+  const netlifyForm = document.querySelector('form[netlify]');
+  const successDiv = document.getElementById('formSuccess');
+  if (netlifyForm && successDiv) {
+    netlifyForm.addEventListener('submit', function(e) {
+      setTimeout(() => {
+        successDiv.style.display = 'block';
+        netlifyForm.reset();
+        setTimeout(() => { successDiv.style.display = 'none'; }, 5000);
+      }, 500);
+    });
+  }
+
+  // FAQ uses native <details> — no JS needed
+
+  const bestallLink = document.getElementById('cafeBestallLink');
+  if (bestallLink) bestallLink.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('priser').scrollIntoView({ behavior: 'smooth' }); });
+
+  const mobileBtn = document.getElementById('mobileBtn');
+  const navLinks = document.querySelector('.nav-links');
+  if (mobileBtn) mobileBtn.addEventListener('click', () => {
+    if (navLinks.style.display === 'flex') navLinks.style.display = 'none';
+    else { navLinks.style.display = 'flex'; navLinks.style.flexDirection = 'column'; navLinks.style.position = 'absolute'; navLinks.style.top = '70px'; navLinks.style.left = '0'; navLinks.style.right = '0'; navLinks.style.background = '#1a1a1a'; navLinks.style.padding = '20px'; navLinks.style.gap = '20px'; navLinks.style.zIndex = '99'; }
+  });
+
+  // ── CART SYSTEM ──
+  const cartPanel   = document.getElementById('cart-panel');
+  const cartOverlay = document.getElementById('cart-overlay');
+  const cartFab     = document.getElementById('cart-fab');
+  const cartClose   = document.getElementById('cart-close');
+  const cartNext    = document.getElementById('cart-next');
+  const cartBack    = document.getElementById('cart-back');
+  const cstep1      = document.getElementById('cstep1');
+  const cstep2      = document.getElementById('cstep2');
+  const ctab1       = document.getElementById('ctab1');
+  const ctab2       = document.getElementById('ctab2');
+  const driftWarn   = document.getElementById('cart-drift-warn');
+
+  let cart = { web: null, drift: null };
+
+  function openCart()  { cartPanel.classList.add('open'); cartOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeCart() { cartPanel.classList.remove('open'); cartOverlay.classList.remove('open'); document.body.style.overflow = ''; }
+
+  cartClose.addEventListener('click', closeCart);
+  cartOverlay.addEventListener('click', closeCart);
+  cartFab.addEventListener('click', openCart);
+
+  function needsPremium() { return cart.web && (cart.web.pkg === 'Basic+ (6 990 kr)' || cart.web.pkg === 'Premium (9 990 kr)'); }
+  function needsProffsDrift() { return cart.web && cart.web.pkg === 'Proffs (från 14 990 kr)'; }
+
+  function updateDriftOpts() {
+    document.querySelectorAll('.cart-drift-opt').forEach(opt => {
+      const d = opt.dataset.drift;
+      let disabled = false;
+      if (needsProffsDrift() && d !== 'Proffs drift') disabled = true;
+      else if (needsPremium() && d === 'Basic drift') disabled = true;
+      opt.classList.toggle('disabled', disabled);
+      if (disabled && opt.classList.contains('selected')) { opt.classList.remove('selected'); cart.drift = null; }
+    });
+    // Auto-select
+    if (needsProffsDrift() && (!cart.drift || cart.drift.drift !== 'Proffs drift')) {
+      const o = document.querySelector('.cart-drift-opt[data-drift="Proffs drift"]');
+      if (o) { document.querySelectorAll('.cart-drift-opt').forEach(x => x.classList.remove('selected')); o.classList.add('selected'); cart.drift = { drift: 'Proffs drift', monthly: 595 }; }
+    } else if (needsPremium() && (!cart.drift || cart.drift.drift === 'Basic drift')) {
+      const o = document.querySelector('.cart-drift-opt[data-drift="Premium drift"]');
+      if (o) { document.querySelectorAll('.cart-drift-opt').forEach(x => x.classList.remove('selected')); o.classList.add('selected'); cart.drift = { drift: 'Premium drift', monthly: 395 }; }
+    }
+    driftWarn.classList.toggle('show', needsPremium() || needsProffsDrift());
+    if (needsProffsDrift()) driftWarn.textContent = '⚠️ Proffs-paketet kräver Proffs drift';
+    else if (needsPremium()) driftWarn.textContent = '⚠️ Detta paket kräver minst Premium drift';
+  }
+
+  function renderCart() {
+    const itemsEl = document.getElementById('cart-items');
+    const totalWrap = document.getElementById('cart-total-wrap');
+    const totalEl = document.getElementById('cart-total');
+
+    if (!cart.web) {
+      itemsEl.innerHTML = '<div class="cart-empty">Inga paket valda ännu.</div>';
+      totalWrap.style.display = 'none';
+      cartFab.classList.remove('show');
+      cartNext.disabled = true;
+      cartNext.textContent = 'Välj driftpaket för att gå vidare →';
+      return;
+    }
+
+    cartFab.classList.add('show');
+    document.getElementById('cart-fab-label').textContent = cart.web.pkg.split(' ')[0] + (cart.drift ? ' + drift' : '');
+
+    let html = `<div class="cart-item"><div class="cart-item-info"><strong>${cart.web.pkg.split(' (')[0]}</strong><span>Webbpaket</span></div><div class="cart-item-price">${cart.web.price}</div></div>`;
+    if (cart.drift) {
+      html += `<div class="cart-item"><div class="cart-item-info"><strong>${cart.drift.drift}</strong><span>Driftpaket</span></div><div class="cart-item-price">${cart.drift.monthly > 0 ? cart.drift.monthly + ' kr/mån' : 'Gratis'}</div></div>`;
+    }
+    itemsEl.innerHTML = html;
+
+    const webNum = parseInt(cart.web.price.replace(/[^0-9]/g,'')) || 0;
+    totalEl.innerHTML = `
+      <div class="cart-total-row"><span>Webbpaket (engång)</span><span>${cart.web.price}</span></div>
+      ${cart.drift && cart.drift.monthly > 0 ? `<div class="cart-total-row"><span>Drift/mån</span><span>${cart.drift.monthly} kr/mån</span></div>` : ''}
+      <div class="cart-total-row main"><span>Att betala nu</span><span>${webNum.toLocaleString('sv-SE')} kr</span></div>`;
+    totalWrap.style.display = 'block';
+
+    cartNext.disabled = !cart.drift;
+    cartNext.textContent = cart.drift ? 'Gå vidare →' : 'Välj driftpaket för att gå vidare →';
+  }
+
+  function setStep(n) {
+    const s1 = n === 1;
+    cstep1.style.display = s1 ? 'block' : 'none';
+    cstep2.style.display = s1 ? 'none' : 'block';
+    ctab1.classList.toggle('active', s1);
+    ctab2.classList.toggle('active', !s1);
+    ctab1.classList.toggle('done', !s1);
+    cartBack.style.display = s1 ? 'none' : 'block';
+    if (!s1) { cartNext.textContent = 'Börja Projekt'; cartNext.disabled = false; }
+    else { cartNext.textContent = cart.drift ? 'Gå vidare →' : 'Välj driftpaket för att gå vidare →'; cartNext.disabled = !cart.drift; }
+  }
+
+  document.querySelectorAll('.cart-drift-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      if (opt.classList.contains('disabled')) return;
+      document.querySelectorAll('.cart-drift-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      cart.drift = { drift: opt.dataset.drift, monthly: parseInt(opt.dataset.monthly) };
+      renderCart();
+    });
+  });
+
+  function selectPkg(pkg, price, el) {
+    cart.web = { pkg, price };
+    document.querySelectorAll('.price-card[data-pkg]').forEach(c => c.style.outline = '');
+    if (el) el.style.outline = '2px solid #c4622e';
+    // Sync contact form selects
+    const ps = document.getElementById('paketSelect');
+    if (ps) { for (const o of ps.options) { if (o.value === pkg) { ps.value = pkg; break; } } }
+    updateDriftOpts();
+    renderCart();
+    setStep(1);
+    openCart();
+  }
+
+  // Wire up price card clicks
+  document.querySelectorAll('.price-card[data-pkg]').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.tagName === 'BUTTON') return; // let CTA buttons handle themselves
+      selectPkg(card.dataset.pkg, card.querySelector('.price-amount').textContent.trim().replace(/\s+/g,' '), card);
+    });
+  });
+
+  // CTA buttons
+  document.getElementById('basicCta').addEventListener('click', (e) => { e.stopPropagation(); selectPkg('Basic (4 990 kr)', '4 990 kr', document.getElementById('basicCard')); });
+  document.getElementById('basicPlusCta').addEventListener('click', (e) => { e.stopPropagation(); selectPkg('Basic+ (6 990 kr)', '6 990 kr', document.getElementById('basicPlusCard')); });
+  document.getElementById('premiumCta').addEventListener('click', (e) => { e.stopPropagation(); selectPkg('Premium (9 900 kr)', '9 900 kr', document.getElementById('premiumCard')); });
+  document.getElementById('proffsCta').addEventListener('click', (e) => { e.stopPropagation(); selectPkg('Proffs (från 14 900 kr)', 'från 14 900 kr', document.getElementById('proffsCard')); });
+
+  // Also wire drift cards
+  document.getElementById('basicDriftCard').addEventListener('click', () => {
+    const o = document.querySelector('.cart-drift-opt[data-drift="Basic drift"]');
+    if (o && !o.classList.contains('disabled')) { document.querySelectorAll('.cart-drift-opt').forEach(x => x.classList.remove('selected')); o.classList.add('selected'); cart.drift = { drift: 'Basic drift', monthly: 0 }; renderCart(); openCart(); }
+  });
+  document.getElementById('premiumDriftCard').addEventListener('click', () => {
+    const o = document.querySelector('.cart-drift-opt[data-drift="Premium drift"]');
+    if (o) { document.querySelectorAll('.cart-drift-opt').forEach(x => x.classList.remove('selected')); o.classList.add('selected'); cart.drift = { drift: 'Premium drift', monthly: 395 }; renderCart(); openCart(); }
+  });
+  document.getElementById('proffsDriftCard').addEventListener('click', () => {
+    const o = document.querySelector('.cart-drift-opt[data-drift="Proffs drift"]');
+    if (o) { document.querySelectorAll('.cart-drift-opt').forEach(x => x.classList.remove('selected')); o.classList.add('selected'); cart.drift = { drift: 'Proffs drift', monthly: 595 }; renderCart(); openCart(); }
+  });
+
+  // Cart next/submit
+  cartNext.addEventListener('click', () => {
+    if (cstep1.style.display !== 'none') {
+      if (!cart.drift) { driftWarn.classList.add('show'); driftWarn.textContent = '⚠️ Välj ett driftpaket för att gå vidare'; return; }
+      setStep(2);
+    } else {
+      const n = document.getElementById('cfn').value.trim();
+      const em = document.getElementById('cfe').value.trim();
+      const msg = document.getElementById('cfm').value.trim();
+      let ok = true;
+      document.getElementById('cfg-n').classList.toggle('err', !n); if (!n) ok = false;
+      document.getElementById('cfg-e').classList.toggle('err', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)); if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) ok = false;
+      document.getElementById('cfg-m').classList.toggle('err', !msg); if (!msg) ok = false;
+      if (!ok) return;
+      cartNext.disabled = true; cartNext.textContent = 'Skickar…';
+      const tel = document.getElementById('cftel').value.trim();
+      const webNumLocal = parseInt((cart.web && cart.web.price || '').replace(/[^0-9]/g,'')) || 0;
+      const payload = {
+        'form-name': 'lkwd-offert',
+        namn: n,
+        epost: em,
+        telefon: tel,
+        paket: cart.web ? cart.web.pkg : '',
+        drift: cart.drift ? (cart.drift.drift + ' (' + cart.drift.monthly + ' kr/mån)') : '',
+        totalt: webNumLocal ? (webNumLocal.toLocaleString('sv-SE') + ' kr engång' + (cart.drift && cart.drift.monthly ? ' + ' + cart.drift.monthly + ' kr/mån' : '')) : '',
+        meddelande: msg,
+        'bot-field': ''
+      };
+      const body = Object.keys(payload).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(payload[k])).join('&');
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
+        .then(r => {
+          if (!r.ok) throw new Error('Network');
+          document.getElementById('cart-form').reset();
+          document.getElementById('cart-success').style.display = 'block';
+          cartNext.disabled = false; cartNext.textContent = 'Börja Projekt';
+          setTimeout(() => { document.getElementById('cart-success').style.display = 'none'; closeCart(); }, 4000);
+        })
+        .catch(() => {
+          cartNext.disabled = false; cartNext.textContent = 'Börja Projekt';
+          alert('Något gick fel — försök igen eller maila leon@lkwd.se');
+        });
+    }
+  });
+  cartBack.addEventListener('click', () => setStep(1));
+
+
+
+  // Demo card now uses stretched <a> — no JS needed
+
+  // --- Preselect paket from URL (?paket=...) for visitors coming from café-webb CTAs ---
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const paket = params.get('paket');
+    if (paket) {
+      const ps = document.getElementById('paketSelect');
+      if (ps) {
+        for (const o of ps.options) {
+          if (o.value === paket || o.value.toLowerCase().startsWith(paket.toLowerCase())) { ps.value = o.value; break; }
+        }
+      }
+      const drift = params.get('drift');
+      if (drift) {
+        const ds = document.getElementById('driftSelect');
+        if (ds) {
+          for (const o of ds.options) {
+            if (o.value === drift || o.value.toLowerCase().startsWith(drift.toLowerCase())) { ds.value = o.value; break; }
+          }
+        }
+      }
+      // Scroll to contact form once page is ready
+      setTimeout(() => {
+        const k = document.getElementById('kontakt');
+        if (k) k.scrollIntoView({ behavior: 'smooth' });
+      }, 200);
+    }
+  } catch (_) {}
+
+
+  // (i) info popovers
+  document.querySelectorAll('[data-info]').forEach(card => {
+    if (card.querySelector(':scope > .info-btn')) return;
+    card.classList.add('has-info');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'info-btn';
+    btn.setAttribute('aria-label', 'Mer information');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.textContent = 'i';
+    const pop = document.createElement('div');
+    pop.className = 'info-pop';
+    pop.innerHTML = card.getAttribute('data-info');
+    card.appendChild(btn);
+    card.appendChild(pop);
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = pop.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    pop.addEventListener('click', (e) => e.stopPropagation());
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.info-pop.open').forEach(p => p.classList.remove('open'));
+    document.querySelectorAll('.info-btn[aria-expanded="true"]').forEach(b => b.setAttribute('aria-expanded', 'false'));
+  });
+
+  // ── CHANGE PACKAGE DROPDOWN ──
+  const changePkgBtn = document.getElementById('cart-change-pkg-btn');
+  const pkgDropdown = document.getElementById('cart-pkg-dropdown');
+
+  function updatePkgDropdown() {
+    document.querySelectorAll('.cart-pkg-opt').forEach(opt => {
+      opt.classList.toggle('selected', cart.web && opt.dataset.pkg === cart.web.pkg);
+    });
+  }
+
+  changePkgBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    updatePkgDropdown();
+    pkgDropdown.classList.toggle('open');
+  });
+
+  document.querySelectorAll('.cart-pkg-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const pkg = opt.dataset.pkg;
+      const price = opt.dataset.price;
+      cart.web = { pkg, price };
+      document.querySelectorAll('.price-card[data-pkg]').forEach(c => c.style.outline = '');
+      const matchCard = document.querySelector(`.price-card[data-pkg="${pkg}"]`);
+      if (matchCard) matchCard.style.outline = '2px solid #c4622e';
+      const ps = document.getElementById('paketSelect');
+      if (ps) { for (const o of ps.options) { if (o.value === pkg) { ps.value = pkg; break; } } }
+      updatePkgDropdown();
+      pkgDropdown.classList.remove('open');
+      updateDriftOpts();
+      renderCart();
+    });
+  });
+
+  document.addEventListener('click', () => pkgDropdown.classList.remove('open'));
+  pkgDropdown.addEventListener('click', (e) => e.stopPropagation());
+
+  renderCart();
+</script>
+</body>
+</html>

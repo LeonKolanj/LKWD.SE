@@ -1,0 +1,437 @@
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Varför Node.js? – Modern teknik för din hemsida | LKWD.se</title>
+  <meta name="description" content="Node.js är en modern teknik som används av Netflix, Uber och LinkedIn. Snabbare, säkrare och mer skalbar än traditionella lösningar. Läs mer om fördelarna här.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #1a1a1a; color: #e8e6e1; line-height: 1.65; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; letter-spacing: -0.01em; }
+    .btn { display: inline-block; background: #c4622e; color: white; padding: 14px 32px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; }
+    .btn:hover { background: #b05528; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(196,98,46,0.3); }
+
+    nav { background: rgba(26,26,26,0.95); backdrop-filter: blur(10px); padding: 16px 24px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #2a2a2a; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: white; text-decoration: none; }
+    .logo span { color: #c4622e; }
+    .nav-back { color: #9a9590; text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .nav-back:hover { color: #fff; }
+
+    .hero { background: #1a1a1a; padding: 100px 24px 80px; text-align: center; position: relative; }
+    .hero h1 { font-size: 3rem; margin-bottom: 20px; color: #fff; letter-spacing: -0.02em; }
+    .hero p { font-size: 1.1rem; color: #9a9590; max-width: 650px; margin: 0 auto; line-height: 1.6; }
+
+    section { padding: 80px 0; }
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-tag { display: inline-block; background: rgba(196,98,46,0.12); color: #c4622e; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 30px; margin-bottom: 16px; }
+    .section-header h2 { font-size: 2.2rem; color: #fff; margin-bottom: 16px; }
+    .section-header p { font-size: 1rem; color: #9a9590; max-width: 600px; margin: 0 auto; }
+
+    .benefits-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .benefit-card { background: #f5f0e8; border-radius: 16px; padding: 32px; transition: all 0.3s ease; border: 1px solid #e0d9cc; color: #1a1a1a; position: relative; }
+    .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); border-color: #c4622e; }
+    .benefit-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .benefit-card h3 { font-size: 1.3rem; color: #1a1a1a; margin-bottom: 12px; font-family: 'Playfair Display', serif; }
+    .benefit-card p { font-size: 0.85rem; color: #5a4a3a; line-height: 1.6; margin-bottom: 16px; }
+    .benefit-stats { font-size: 0.75rem; color: #c4622e; font-weight: 600; margin-top: 16px; padding-top: 12px; border-top: 1px solid #e0d9cc; }
+
+    /* (i) info button — matches pattern from other pages */
+    .info-btn {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid #c4622e;
+      background: transparent;
+      color: #c4622e;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 0.85rem;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 2;
+    }
+    .info-btn:hover { background: #c4622e; color: #fff; transform: scale(1.08); }
+    .info-btn:focus-visible { outline: 2px solid #c4622e; outline-offset: 2px; }
+
+    .faq-card { position: relative; }
+
+    /* Popover */
+    .info-popover {
+      position: fixed;
+      max-width: 320px;
+      background: #fff;
+      color: #1a1a1a;
+      border: 1px solid #e0d9cc;
+      border-left: 4px solid #c4622e;
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      pointer-events: none;
+    }
+    .info-popover.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .info-popover strong { color: #c4622e; }
+    .info-popover-close {
+      position: absolute; top: 6px; right: 8px;
+      background: none; border: none; font-size: 1rem;
+      color: #9a9590; cursor: pointer;
+    }
+    .info-popover-close:hover { color: #1a1a1a; }
+    .info-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.001);
+      z-index: 9998;
+      display: none;
+    }
+    .info-backdrop.open { display: block; }
+
+    .companies { background: #f5f0e8; border-radius: 16px; padding: 32px; text-align: center; margin: 40px 0; border: 1px solid #e0d9cc; }
+    .companies p { color: #7a6a5a; margin-bottom: 20px; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+    .company-logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .company-logos span { background: #c4622e; padding: 8px 20px; border-radius: 40px; font-size: 0.8rem; color: white; font-weight: 500; }
+
+    .comparison-wrapper { background: #f5f0e8; border-radius: 16px; padding: 32px; margin-top: 20px; border: 1px solid #e0d9cc; }
+    .comparison-table { display: flex; flex-direction: column; }
+    .comparison-row { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid #e0d9cc; align-items: center; }
+    .comparison-row:last-child { border-bottom: none; }
+    .comparison-row.subheader { border-bottom: 2px solid #c4622e; }
+    .comparison-cell { padding: 16px 20px; font-size: 0.95rem; text-align: center; }
+    .comparison-cell.question { font-weight: 700; color: #1a1a1a; text-align: center; }
+    .comparison-cell.answer { color: #c4622e; font-weight: 800; text-align: center; }
+    .comparison-row.subheader .comparison-cell { font-size: 1rem; font-weight: 700; text-align: center; color: #c4622e; }
+    .check { color: #c4622e; font-weight: 800; }
+    .cross { color: #c4622e; font-weight: 800; }
+
+    .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 20px; }
+    .faq-card { background: #f5f0e8; border-radius: 16px; padding: 28px; border: 1px solid #e0d9cc; transition: all 0.2s; }
+    .faq-card:hover { border-color: #c4622e; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+    .faq-card h3 { font-size: 1.1rem; margin-bottom: 12px; color: #1a1a1a; font-family: 'Playfair Display', serif; padding-right: 32px; }
+    .faq-card p { font-size: 0.85rem; color: #5a4a3a; line-height: 1.6; }
+
+    .cta-box { background: #f5f0e8; text-align: center; border-radius: 16px; padding: 60px 48px; margin: 40px 0 60px; border: 1px solid #e0d9cc; }
+    .cta-box h3 { color: #1a1a1a; font-size: 1.8rem; margin-bottom: 16px; }
+    .cta-box p { color: #5a4a3a; margin-bottom: 32px; font-size: 1rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+    footer { background: #111; padding: 48px 24px; text-align: center; border-top: 1px solid #2a2a2a; }
+    footer a { color: #c4622e; text-decoration: none; }
+    footer p { font-size: 0.8rem; color: #666; }
+
+    @media (max-width: 768px) {
+      .benefits-grid { grid-template-columns: 1fr; gap: 20px; }
+      .faq-grid { grid-template-columns: 1fr; gap: 16px; }
+      .comparison-cell { padding: 10px 8px; font-size: 0.72rem; }
+      .hero h1 { font-size: 2rem; }
+      .section-header h2 { font-size: 1.8rem; }
+      .cta-box { padding: 40px 24px; }
+      .cta-box h3 { font-size: 1.4rem; }
+      .benefit-card { padding: 24px; }
+      .comparison-row.subheader .comparison-cell { font-size: 0.8rem; }
+    }
+  </style>
+  <link rel="canonical" href="https://lkwd.se/why-nodejs.html" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231a1a1a'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='700' text-anchor='middle' fill='%23c4622e'%3ELK%3C/text%3E%3C/svg%3E" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="LKWD.se" />
+  <meta property="og:title" content="Varför Node.js? – Modern teknik för din hemsida | LKWD.se" />
+  <meta property="og:description" content="Node.js är en modern teknik som används av Netflix, Uber och LinkedIn. Snabbare, säkrare och mer skalbar än traditionella lösningar." />
+  <meta property="og:url" content="https://lkwd.se/why-nodejs.html" />
+  <meta property="og:locale" content="sv_SE" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Varför Node.js? | LKWD.se" />
+  <meta name="twitter:description" content="Snabbare, säkrare och mer skalbar än traditionella lösningar." />
+
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <a href="https://lkwd.se" class="logo">LK<span>WD</span>.se</a>
+    <a href="https://lkwd.se" class="nav-back">← Tillbaka till startsidan</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Varför Node.js?</h1>
+  <p>Den moderna tekniken bakom världens mest besökta plattformar – nu tillgänglig för din hemsida</p>
+</section>
+
+<div class="container">
+
+  <section>
+    <div class="section-header">
+      <span class="section-tag">🚀 Framtidssäker teknik</span>
+      <h2>Vad är Node.js och varför är det bättre?</h2>
+      <p>Node.js är en modern plattform som bygger på samma teknik som Google Chrome – snabb, säker och skalbar.</p>
+    </div>
+  </section>
+
+  <div class="companies">
+    <p>Används av ledande varumärken</p>
+    <div class="company-logos">
+      <span>Netflix</span>
+      <span>Uber</span>
+      <span>LinkedIn</span>
+      <span>PayPal</span>
+      <span>Walmart</span>
+      <span>eBay</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-header">
+      <span class="section-tag">✨ Fördelar med Node.js</span>
+      <h2>Därför är Node.js rätt val för din verksamhet</h2>
+    </div>
+    <div class="benefits-grid">
+
+      <div class="benefit-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>Blixtsnabb laddning – varför?</strong><br>Node.js är 'non-blocking' och hanterar tusentals samtidiga anslutningar utan att starta en ny process per besökare. Resultat: snabbare svarstider även vid trafiktoppar, vilket Google också belönar i sökresultaten via Core Web Vitals.">i</button>
+        <div class="benefit-icon">⚡</div>
+        <h3>Blixtsnabb laddning</h3>
+        <p>Node.js hanterar flera besökare samtidigt utan att sakta ner. Snabbare hemsida = nöjdare kunder och bättre ranking på Google.</p>
+        <div class="benefit-stats">📊 40% överger en hemsida som laddar långsamt</div>
+      </div>
+
+      <div class="benefit-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>JWT + bcrypt – vad innebär det?</strong><br><strong>bcrypt</strong> hashar lösenord så att de inte kan läsas ut – inte ens av oss. <strong>JWT</strong> (JSON Web Tokens) är signerade inloggnings­tokens som skyddar sessioner mot kapning. Tillsammans följer det branschstandard för säker autentisering.">i</button>
+        <div class="benefit-icon">🔒</div>
+        <h3>Högsta säkerhet</h3>
+        <p>Med JWT och bcrypt krypteras all känslig data – din och dina kunders information skyddas på bästa sätt.</p>
+        <div class="benefit-stats">🛡️ Rekommenderas av säkerhetsexperter</div>
+      </div>
+
+      <div class="benefit-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>Skalbarhet i praktiken</strong><br>När din trafik växer kan vi köra fler instanser av Node bakom en lastbalanserare utan att ändra koden. Du betalar bara för den kapacitet du faktiskt behöver, och vi kan skala upp inför kampanjer eller säsongstoppar.">i</button>
+        <div class="benefit-icon">📈</div>
+        <h3>Skalbarhet – växer med dig</h3>
+        <p>Från 50 till 50 000 besökare – din hemsida hänger med utan problem. Inga ombyggnationer när du växer.</p>
+        <div class="benefit-stats">🚀 Byggt för att skalas obegränsat</div>
+      </div>
+
+      <div class="benefit-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>Roller &amp; behörigheter</strong><br>Varje anställd får ett eget konto med en roll – t.ex. <em>Ägare</em>, <em>Personal</em> eller <em>Kassa</em>. Du bestämmer vem som får ändra meny, priser, recensioner eller se rapporter. Inga delade lösenord, full spårbarhet på vem som ändrade vad.">i</button>
+        <div class="benefit-icon">👥</div>
+        <h3>Inloggningssystem för personal</h3>
+        <p>Låt flera anställda ha egna inloggningar. Du bestämmer vad varje person får göra – smidigt och säkert.</p>
+        <div class="benefit-stats">✅ Perfekt för restauranger, butiker och caféer</div>
+      </div>
+
+      <div class="benefit-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>Varför 'framtidssäkrad'?</strong><br>Node.js har en aktiv LTS-cykel (Long Term Support) och underhålls av OpenJS Foundation. Det betyder regelbundna säkerhets­uppdateringar och inga 'döda' versioner – din hemsida kan rulla på samma plattform i många år utan ombyggnad.">i</button>
+        <div class="benefit-icon">🌍</div>
+        <h3>Framtidssäkrad teknik</h3>
+        <p>Node.js är här för att stanna. Genom att välja modern teknik idag slipper du en kostsam uppgradering imorgon.</p>
+        <div class="benefit-stats">📅 Aktivt utvecklas av tech-bolag världen över</div>
+      </div>
+
+      <div class="benefit-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>V8 – motorn bakom Chrome</strong><br>Node.js bygger på Googles V8 – samma JIT-kompilator som driver Chrome. Kod körs som maskinkod istället för att tolkas rad för rad, vilket gör API-svar och rendering märkbart snabbare jämfört med klassisk PHP.">i</button>
+        <div class="benefit-icon">💪</div>
+        <h3>Bättre prestanda</h3>
+        <p>Node.js bygger på Google Chrome's V8-motor – samma teknik som gör Chrome så snabbt. Din hemsida blir lika snabb.</p>
+        <div class="benefit-stats">🏆 Topprankad på prestandatester</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <span class="section-tag">📊 Jämför själv</span>
+      <h2>Basic (PHP) vs Basic+ (Node.js)</h2>
+      <p>Se skillnaderna – och förstå varför Node.js är värt investeringen</p>
+    </div>
+    <div class="comparison-wrapper">
+      <div class="comparison-table">
+
+        <div class="comparison-row subheader">
+          <div class="comparison-cell">Basic (PHP)</div>
+          <div class="comparison-cell">Jämförelse</div>
+          <div class="comparison-cell">Basic+ (Node.js)</div>
+        </div>
+
+        <div class="comparison-row">
+          <div class="comparison-cell answer">4 990 kr</div>
+          <div class="comparison-cell question">Byggpris</div>
+          <div class="comparison-cell answer">6 990 kr</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell answer">Från 0 kr</div>
+          <div class="comparison-cell question">Drift/månad</div>
+          <div class="comparison-cell answer">395 kr (Premium drift)</div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell answer">Standard</div>
+          <div class="comparison-cell question">Laddningstid</div>
+          <div class="comparison-cell answer"><span class="check">✓ Blixtsnabb</span></div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell answer">Grundläggande</div>
+          <div class="comparison-cell question">Säkerhet (kryptering)</div>
+          <div class="comparison-cell answer"><span class="check">✓ Hög (JWT + bcrypt)</span></div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell answer"><span class="cross">✗ Nej</span></div>
+          <div class="comparison-cell question">Inloggningssystem för personal</div>
+          <div class="comparison-cell answer"><span class="check">✓ Ja (flera användare)</span></div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell answer">Begränsad</div>
+          <div class="comparison-cell question">Skalbarhet (fler besökare)</div>
+          <div class="comparison-cell answer"><span class="check">✓ Obegränsad</span></div>
+        </div>
+        <div class="comparison-row">
+          <div class="comparison-cell answer">Äldre</div>
+          <div class="comparison-cell question">Modern teknik</div>
+          <div class="comparison-cell answer"><span class="check">✓ Framtidssäkrad</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <span class="section-tag">❓ Vanliga frågor</span>
+      <h2>Det här undrar många om Node.js</h2>
+    </div>
+    <div class="faq-grid">
+
+      <div class="faq-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>Samma admin-känsla</strong><br>Adminpanelen är ett vanligt webbgränssnitt med formulär och knappar. Du klickar, skriver och sparar – precis som i ett vanligt CMS. All teknik ligger 'under huven'.">i</button>
+        <h3>Måste jag kunna koda för att använda Node.js?</h3>
+        <p>Nej! Admin-panelen ser exakt likadan ut som för PHP-versionen. Du märker ingen skillnad i vardagen – bara att hemsidan är snabbare och säkrare.</p>
+      </div>
+
+      <div class="faq-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>Vad ingår i 395 kr/mån?</strong><br>VPS med dedikerade resurser, automatiska säkerhetsuppdateringar, daglig backup, SSL-certifikat, övervakning dygnet runt och prioriterad support inom 24 h. Ingen risk för att 'grannar' på samma server saktar ner dig.">i</button>
+        <h3>Är Node.js dyrare i drift?</h3>
+        <p>Ja, Node.js kräver Premium drift (395 kr/mån) eftersom det behöver en kraftfullare server (VPS). Skillnaden ger dig bättre prestanda, högre säkerhet och prioriterad support.</p>
+      </div>
+
+      <div class="faq-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>Så går uppgraderingen till</strong><br>Vi flyttar över ditt innehåll (meny, recensioner, bilder) och kopplar om domänen. Hemsidan ligger uppe under hela övergången, och du betalar bara mellanskillnaden 2 000 kr – ingen ny startavgift.">i</button>
+        <h3>Kan jag uppgradera från PHP till Node.js senare?</h3>
+        <p>Absolut! Börjar du med Basic (PHP) och vill uppgradera till Basic+ (Node.js) senare – jag hjälper dig. Du betalar mellanskillnaden (2 000 kr).</p>
+      </div>
+
+      <div class="faq-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>Domänflytt utan stress</strong><br>Vi pekar om DNS:en (A- och CNAME-poster) till nya servern. Eventuella e-postadresser på domänen påverkas inte. Hela bytet sker ofta inom någon timme och kräver inget av dig utöver inloggning till din domänleverantör.">i</button>
+        <h3>Fungerar det med min nuvarande domän?</h3>
+        <p>Ja. Jag hjälper dig koppla din befintliga domän till den nya hemsidan. Inga krångliga tekniska steg – jag fixar allt.</p>
+      </div>
+
+      <div class="faq-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>Hur beprövat?</strong><br>Node.js lanserades 2009 och driver idag delar av Netflix, PayPal, LinkedIn, Uber och NASA. Plattformen har 10+ år av produktionsdrift och en av världens största npm-paketkataloger bakom sig.">i</button>
+        <h3>Är Node.js beprövat?</h3>
+        <p>Ja. Node.js används av några av världens mest trafikerade webbplatser och har funnits i över ett decennium.</p>
+      </div>
+
+      <div class="faq-card">
+        <button class="info-btn" type="button" aria-label="Mer information" data-info="<strong>Säkerhet enligt OWASP</strong><br>Vi följer OWASP Top 10: hashade lösenord (bcrypt), CSRF-skydd, parametriserade databasfrågor, säker session­hantering (JWT med kort livslängd), HTTPS överallt och rate limiting. Säkerhetsuppdateringar installeras automatiskt.">i</button>
+        <h3>Behöver jag oroa mig för säkerheten?</h3>
+        <p>Nej, tvärtom. Node.js har inbyggda säkerhetsfunktioner som skyddar din data bättre än äldre teknik. Jag konfigurerar allt enligt bästa praxis.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="cta-box">
+    <h3>Redo att ta steget in i framtiden?</h3>
+    <p>Med Node.js får du en hemsida som är snabbare, säkrare och byggd för att växa med ditt företag.</p>
+    <a href="https://lkwd.se#kontakt" class="btn">Kontakta mig →</a>
+  </div>
+</div>
+
+<!-- Popover infrastructure -->
+<div class="info-backdrop" id="infoBackdrop"></div>
+<div class="info-popover" id="infoPopover" role="dialog" aria-modal="false">
+  <button class="info-popover-close" type="button" aria-label="Stäng" id="infoClose">✕</button>
+  <div id="infoContent"></div>
+</div>
+
+<footer>
+  <p>© <span id="yr"></span> <a href="https://lkwd.se">LKWD.se</a> — Leon Kolanj Webb & Utveckling</p>
+  <p style="margin-top: 12px; font-size: 0.7rem;">Stockholm, Sverige</p>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  (function () {
+    const popover  = document.getElementById('infoPopover');
+    const content  = document.getElementById('infoContent');
+    const backdrop = document.getElementById('infoBackdrop');
+    const closeBtn = document.getElementById('infoClose');
+
+    function closePopover() {
+      popover.classList.remove('open');
+      backdrop.classList.remove('open');
+    }
+
+    function openPopover(btn) {
+      const html = btn.getAttribute('data-info') || '';
+      content.innerHTML = html;
+      popover.classList.add('open');
+      backdrop.classList.add('open');
+
+      // Position next to button, clamped to viewport
+      const rect = btn.getBoundingClientRect();
+      // Render first to measure
+      popover.style.left = '0px';
+      popover.style.top  = '0px';
+      const pw = popover.offsetWidth;
+      const ph = popover.offsetHeight;
+      const margin = 12;
+
+      let left = rect.right + 10;
+      if (left + pw + margin > window.innerWidth) {
+        left = Math.max(margin, rect.left - pw - 10);
+      }
+      let top = rect.top;
+      if (top + ph + margin > window.innerHeight) {
+        top = Math.max(margin, window.innerHeight - ph - margin);
+      }
+
+      popover.style.left = left + 'px';
+      popover.style.top  = top  + 'px';
+    }
+
+    document.querySelectorAll('.info-btn').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (popover.classList.contains('open') && popover.dataset.owner === btn.dataset.id) {
+          closePopover();
+          return;
+        }
+        openPopover(btn);
+      });
+    });
+
+    closeBtn.addEventListener('click', closePopover);
+    backdrop.addEventListener('click', closePopover);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closePopover();
+    });
+    window.addEventListener('resize', closePopover);
+    window.addEventListener('scroll', closePopover, { passive: true });
+  })();
+</script>
+</body>
+</html>

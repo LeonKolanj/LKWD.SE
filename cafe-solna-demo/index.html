@@ -1,0 +1,1021 @@
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Café Solna | Välkommen till ditt lokala café</title>
+  <meta name="description" content="Café Solna – kaffe, bakverk och lunch i hjärtat av Solna." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fefaf5;
+      color: #2c241a;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+    h1, h2, h3, .logo, .menu-item h3, .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .btn {
+      display: inline-block;
+      background: #2f5d3a;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .btn:hover { background: #1f4027; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(47,93,58,0.25); }
+    .btn-outline { background: transparent; border: 1.5px solid #2f5d3a; color: #2f5d3a; }
+    .btn-outline:hover { background: #2f5d3a; color: white; }
+    
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 30px;
+      margin-left: 10px;
+      vertical-align: middle;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .badge:hover { opacity: 0.8; transform: scale(1.02); }
+    .badge-popular { background: #c6a43b; color: #1a2a1f; }
+    .badge-bestseller { background: #2f5d3a; color: white; }
+
+    .badge-popup {
+      position: fixed;
+      background: white;
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      border: 1px solid #e0d4c8;
+      z-index: 10000;
+      min-width: 260px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    .badge-popup button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 0.85rem;
+      border-radius: 8px;
+    }
+    .badge-popup button:hover { background: #f0ece6; }
+    .badge-popup hr { margin: 6px 0; border-color: #e0d4c8; }
+    .badge-popup .title { 
+      font-weight: 600; 
+      padding: 8px 12px; 
+      color: #7a6a5a; 
+      font-size: 0.7rem; 
+      text-transform: uppercase; 
+      letter-spacing: 0.5px;
+    }
+
+    nav {
+      background: white;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .logo { font-size: 1.6rem; font-weight: 700; color: #2f5d3a; text-decoration: none; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { text-decoration: none; color: #2c241a; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #2f5d3a; }
+    .mobile-menu-btn { display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: #2c241a; }
+
+    .hero {
+      background: linear-gradient(135deg, #f5ede4 0%, #fff5ed 100%);
+      padding: 80px 0 60px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(#2f5d3a 0.6px, transparent 0.6px);
+      background-size: 32px 32px;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 { font-size: 3rem; line-height: 1.2; margin-bottom: 20px; }
+    .hero p { font-size: 1.1rem; color: #5a4a3a; margin-bottom: 28px; line-height: 1.6; }
+    .hero-badge {
+      display: inline-block;
+      background: #e8d9cc;
+      color: #2f5d3a;
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    .hero-image {
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
+    }
+    .hero-image img { width: 100%; height: auto; display: block; object-fit: cover; aspect-ratio: 4/3; }
+
+    section { padding: 80px 0; }
+    .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 12px; }
+    .section-sub { text-align: center; color: #7a6a5a; max-width: 600px; margin: 0 auto 48px; }
+
+    .menu-section {
+      background: #fefaf5;
+      position: relative;
+    }
+    .menu-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(#d4c8bc 0.5px, transparent 0.5px);
+      background-size: 24px 24px;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 48px;
+      position: relative;
+      z-index: 1;
+    }
+    .menu-category h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      border-left: 3px solid #2f5d3a;
+      padding-left: 16px;
+    }
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 12px 0;
+      border-bottom: 1px dashed #e0d4c8;
+    }
+    .menu-item h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+    .menu-item p { font-size: 0.85rem; color: #7a6a5a; }
+    .menu-price { font-weight: 600; color: #2f5d3a; white-space: nowrap; margin-left: 16px; }
+
+    .weekly-lunch {
+      background: #2f5d3a;
+      color: white;
+      border-radius: 24px;
+      padding: 32px;
+      margin: 40px auto;
+      max-width: 600px;
+      text-align: center;
+    }
+    .weekly-lunch h3 { font-size: 1.4rem; margin-bottom: 8px; }
+    .weekly-lunch p { opacity: 0.9; margin-bottom: 4px; }
+    .weekly-lunch .price { font-size: 1.8rem; font-weight: 700; margin-top: 12px; }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin: 40px 0;
+    }
+    .review-card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border: 1px solid #e8e0d8;
+    }
+    .review-stars { color: #c6a43b; margin-bottom: 12px; letter-spacing: 2px; }
+    .review-text { font-style: italic; color: #5a4a3a; margin-bottom: 16px; line-height: 1.6; }
+    .review-name { font-weight: 600; color: #2c241a; }
+    .review-title { font-size: 0.8rem; color: #7a6a5a; }
+
+    .instagram-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .insta-item {
+      aspect-ratio: 1;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .insta-item:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+    .insta-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .comparison {
+      background: #e8e0d8;
+      border-radius: 24px;
+      padding: 40px;
+      margin: 40px 0;
+    }
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      text-align: center;
+    }
+    .comparison-card { background: white; border-radius: 20px; padding: 24px; }
+    .comparison-card h4 { font-size: 1.2rem; margin-bottom: 16px; }
+    .comparison-card .price { font-size: 2rem; font-weight: 700; color: #2f5d3a; margin: 16px 0; }
+    .comparison-card ul { list-style: none; text-align: left; margin-top: 16px; }
+    .comparison-card li { padding: 8px 0; border-bottom: 1px solid #e8e0d8; }
+    li.cross { color: #c0a0a0; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .hours-list { list-style: none; }
+    .hours-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #e8e0d8;
+    }
+    .map {
+      background: #e0d4c8;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 300px;
+    }
+
+    .contact-form {
+      background: white;
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border: 1px solid #e8e0d8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid #e0d4c8;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      transition: 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #2f5d3a; }
+    .safe-badge {
+      background: #2f5d3a;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .admin-add-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid #2f5d3a;
+      color: #2f5d3a;
+      font-size: 0.8rem;
+      line-height: 1;
+      cursor: pointer;
+      margin-left: 8px;
+      vertical-align: middle;
+      background: white;
+      flex-shrink: 0;
+    }
+    .admin-add-btn:hover { background: #2f5d3a; color: white; }
+    body.is-admin .admin-add-btn { display: inline-flex; }
+    body.is-admin .badge { cursor: pointer; }
+    body:not(.is-admin) .badge { cursor: default; pointer-events: none; }
+    
+    .admin-panel {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      margin: 40px auto;
+      max-width: 600px;
+      border: 2px solid #2f5d3a;
+    }
+    .admin-panel h3 { font-size: 1.5rem; margin-bottom: 20px; color: #2f5d3a; }
+    .admin-panel input, .admin-panel select, .admin-panel textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      border: 1px solid #e0d4c8;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+    .admin-panel label { font-weight: 600; display: block; margin-bottom: 6px; }
+    .admin-login {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      margin: 80px auto;
+      max-width: 400px;
+      text-align: center;
+      border: 2px solid #2f5d3a;
+    }
+    .admin-login input { width: 100%; padding: 12px; margin: 16px 0; border: 1px solid #e0d4c8; border-radius: 12px; }
+
+    footer {
+      background: #1a2a1f;
+      color: #c0b0a0;
+      padding: 48px 0 24px;
+      margin-top: 40px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+    .footer-grid a { color: #c0b0a0; text-decoration: none; }
+    .footer-grid a:hover { color: white; }
+    .footer-bottom {
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid #2f3d2a;
+      font-size: 0.8rem;
+    }
+
+    .demo-banner {
+      background: #1a2a1f;
+      color: white;
+      text-align: center;
+      padding: 12px 24px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      position: sticky;
+      top: 0;
+      z-index: 101;
+    }
+    .demo-banner code {
+      background: rgba(255,255,255,0.15);
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+    .demo-banner a {
+      color: #c6a43b;
+      font-weight: 600;
+      margin-left: 12px;
+      text-decoration: none;
+    }
+    .demo-banner a:hover { text-decoration: underline; }
+
+    .admin-info-box {
+      background: #e8e0d8;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 40px auto;
+      max-width: 600px;
+      text-align: center;
+      border-left: 4px solid #c6a43b;
+    }
+    .admin-info-box h4 { color: #2c241a; margin-bottom: 8px; }
+    .admin-info-box p { color: #5a4a3a; font-size: 0.85rem; }
+    .admin-info-box code {
+      background: #1a2a1f;
+      color: #c6a43b;
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-family: monospace;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .hero-grid, .info-grid { grid-template-columns: 1fr; }
+      .instagram-grid { grid-template-columns: repeat(2, 1fr); }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 20px;
+        gap: 20px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        z-index: 200;
+      }
+      .section-title { font-size: 1.8rem; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .hero h1 { font-size: 2.2rem; }
+      .instagram-grid { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="demo-banner" role="banner">
+  🎯 <strong>Detta är en levande demo av vår café-webb</strong> – du kan testa adminpanelen här! Logga in med <code>cafe2025</code> via länken längre ner på sidan.
+  <a href="https://lkwd.se/#priser">Beställ din egen café-webb från 4 990 kr →</a>
+</div>
+
+<nav>
+  <div class="nav-container">
+    <a href="#" class="logo">Café Solna</a>
+    <div class="nav-links" id="navLinks">
+      <a href="#meny">Meny</a>
+      <a href="#recensioner">Recensioner</a>
+      <a href="#instagram">Instagram</a>
+      <a href="#info">Öppettider</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Meny">☰</button>
+  </div>
+</nav>
+
+<main id="app">
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <span class="hero-badge">☕ Välkommen in</span>
+          <h1>Kaffe, bakverk &<br>lunch i hjärtat av Solna</h1>
+          <p>Café Solna är din plats för en stund av välförtjänt vila. Hantverkskaffe, nybakat och lunch gjord på råvaror från lokala producenter.</p>
+          <a href="#kontakt" class="btn">Boka bord →</a>
+        </div>
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&auto=format" alt="Café miljö" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-title">Vårt café</div>
+      <div class="section-sub">Vi tror på riktiga möten, riktigt kaffe och en atmosfär där du vill stanna kvar.</div>
+      <div style="max-width: 700px; margin: 0 auto; text-align: center; color: #5a4a3a;">
+        <p>Hos oss hittar du en oas mitt i stan. Oavsett om du behöver en snabb kaffe, en arbetsplats för några timmar eller en lugn lunch – vi har det du söker. Våra baristor älskar kaffe och våra bagare bakar från tidig morgon.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="admin-info-box">
+      <h4>🔐 Ägare? Logga in och testa adminpanelen!</h4>
+      <p>Som caféägare kan du enkelt ändra veckans lunch, priser och märkningar (Populärast/Bästsäljare) helt själv – utan teknisk kunskap.</p>
+      <p><strong>Så här testar du:</strong> Klicka på <strong>#admin</strong> i adressfältet eller <a href="#admin" onclick="window.location.hash='admin';return false;" style="color:#2f5d3a; font-weight:600;">klicka här</a>, ange lösenordet <code>cafe2025</code> och börja redigera! 👇</p>
+      <code>👇 Scrolla ner till Adminpanelen efter inloggning 👇</code>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="weekly-lunch" id="weeklyLunch">
+      <h3>🍽️ Veckans lunch</h3>
+      <p id="lunchDesc">Grillad lax med örtcrème fraiche, pressad potatis och sallad</p>
+      <p>🌿 Färska råvaror från lokalproducenter</p>
+      <div class="price" id="lunchPrice">125:-</div>
+      <small>Serveras 11:00–14:00, måndag–fredag</small>
+    </div>
+  </div>
+
+  <section id="meny" class="menu-section">
+    <div class="container">
+      <div class="section-title">Vår meny</div>
+      <div class="section-sub">Från morgonkaffe till lätt lunch – något för varje smak.</div>
+      <div class="menu-grid">
+        <div class="menu-category">
+          <h3>☕ Kaffe & dryck</h3>
+          <div class="menu-item" data-product="Bryggkaffe" data-category="drinks"><div><h4>Bryggkaffe <span class="badge badge-popular" data-badge-id="pop1" data-product="Bryggkaffe">🏷️ Populärast</span></h4><p>Arvid Nordquist</p></div><span class="menu-price">35:-</span></div>
+          <div class="menu-item" data-product="Kaffe Latte" data-category="drinks"><div><h4>Kaffe Latte</h4><p>Ekologisk mjölk</p></div><span class="menu-price">45:-</span></div>
+          <div class="menu-item" data-product="Cappuccino" data-category="drinks"><div><h4>Cappuccino <span class="badge badge-bestseller" data-badge-id="pop2" data-product="Cappuccino">🏆 Bästsäljare</span></h4><p>Fluffig mjölkskum</p></div><span class="menu-price">45:-</span></div>
+          <div class="menu-item" data-product="Chai Latte" data-category="drinks"><div><h4>Chai Latte</h4><p>Hemgjord chai</p></div><span class="menu-price">49:-</span></div>
+          <div class="menu-item" data-product="Matcha Latte" data-category="drinks"><div><h4>Matcha Latte</h4><p>Ceremoniell matcha</p></div><span class="menu-price">52:-</span></div>
+        </div>
+        <div class="menu-category">
+          <h3>🥐 Bakverk</h3>
+          <div class="menu-item" data-product="Kanelbulle" data-category="pastries"><div><h4>Kanelbulle</h4><p>Nygräddad</p></div><span class="menu-price">39:-</span></div>
+          <div class="menu-item" data-product="Kardemummabulle" data-category="pastries"><div><h4>Kardemummabulle <span class="badge badge-popular" data-badge-id="pop3" data-product="Kardemummabulle">🏷️ Populärast</span></h4><p>Saftig, kardemumma</p></div><span class="menu-price">42:-</span></div>
+          <div class="menu-item" data-product="Kladdkaka" data-category="pastries"><div><h4>Kladdkaka</h4><p>Serveras med vispad grädde</p></div><span class="menu-price">55:-</span></div>
+          <div class="menu-item" data-product="Croissant" data-category="pastries"><div><h4>Croissant</h4><p>Fransk smördeg</p></div><span class="menu-price">35:-</span></div>
+        </div>
+        <div class="menu-category">
+          <h3>🍽️ Lunch (11-14)</h3>
+          <div class="menu-item" data-product="Dagens soppa" data-category="lunch"><div><h4>Dagens soppa <span class="badge badge-bestseller" data-badge-id="pop4" data-product="Dagens soppa">🏆 Bästsäljare</span></h4><p>Hemlagad, serveras med bröd</p></div><span class="menu-price">95:-</span></div>
+          <div class="menu-item" data-product="Toast Skagen" data-category="lunch"><div><h4>Toast Skagen</h4><p>Räkor, dill, äggula</p></div><span class="menu-price">115:-</span></div>
+          <div class="menu-item" data-product="Sallad med halloumi" data-category="lunch"><div><h4>Sallad med halloumi</h4><p>Grönsallad, quinoa</p></div><span class="menu-price">125:-</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="recensioner">
+    <div class="container">
+      <div class="section-title">Vad våra gäster säger</div>
+      <div class="section-sub">Vi är stolta över vårt betyg – och det syns.</div>
+      <div class="reviews-grid" id="reviewsGrid">
+        <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Bästa cafét i Solna! Fantastiskt kaffe och otroligt goda bakverk. Personalen är alltid så trevlig."</div><div class="review-name">– Maria, Solna</div><div class="review-title">Återkommande gäst</div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Älskar deras veckas lunch! God mat till bra pris. Perfekt för en lunchdejt."</div><div class="review-name">– Johan, Stockholm</div><div class="review-title">Lunchgäst</div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Mysigaste cafét. Bra arbetsplats, god fika och härlig atmosfär. Rekommenderas varmt!"</div><div class="review-name">– Anna, Sundbyberg</div><div class="review-title">Jobbar på distans</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="instagram">
+    <div class="container">
+      <div class="section-title">@cafesolna</div>
+      <div class="section-sub">Följ oss för dagens erbjudanden, bakverk och mysiga stunder.</div>
+      <div class="instagram-grid">
+        <a href="#" class="insta-item"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop" alt="Kaffe"></a>
+        <a href="#" class="insta-item"><img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=400&fit=crop" alt="Bakverk"></a>
+        <a href="#" class="insta-item"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=400&fit=crop" alt="Lunch"></a>
+        <a href="#" class="insta-item"><img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=400&h=400&fit=crop" alt="Café"></a>
+      </div>
+      <div style="text-align: center;">
+        <a href="https://instagram.com/cafesolna" target="_blank" rel="noopener" class="btn btn-outline" style="display:inline-flex;align-items:center;gap:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4.5"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+          </svg>
+          Följ oss på Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="info" style="background: #fefaf5;">
+    <div class="container">
+      <div class="info-grid">
+        <div>
+          <div class="section-title" style="text-align: left;">Öppettider</div>
+          <ul class="hours-list"><li><span>Måndag – Fredag</span><span>08:00 – 18:00</span></li><li><span>Lördag</span><span>09:00 – 17:00</span></li><li><span>Söndag</span><span>10:00 – 16:00</span></li></ul>
+          <div style="margin-top: 24px;"><p>📍 <strong>Adress:</strong> Solna Torg 12, 171 45 Solna</p><p>📞 <strong>Telefon:</strong> 08-123 45 67</p><p>✉️ <strong>E-post:</strong> hej@cafesolna.se</p></div>
+        </div>
+        <div class="map">
+          <iframe title="Café Solna karta" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2033.2!2d17.9956!3d59.3618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x465f9f0b5a1b0001%3A0x0!2sSolna+Centrum%2C+Solna!5e0!3m2!1ssv!2sse!4v1700000000000!5m2!1ssv!2sse" width="100%" height="100%" style="border:0; display:block;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <div class="container">
+      <div class="section-title">Boka bord eller fråga oss</div>
+      <div class="section-sub">Vi svarar inom 24 timmar – alltid.</div>
+      <div class="contact-form">
+        <div style="text-align: center; margin-bottom: 24px;"><span class="safe-badge">🔒 Säkert köp – nöjd kundgaranti</span></div>
+        <form action="https://formsubmit.co/leon@lkwd.se" method="POST">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_subject" value="Ny förfrågan från Café Solna-demon!">
+          <input type="hidden" name="_next" value="https://lkwd.se/cafe-solna-demo/#tack">
+          <div class="form-group">
+            <input type="text" name="namn" placeholder="Ditt namn" required>
+          </div>
+          <div class="form-group">
+            <input type="email" name="epost" placeholder="Din e-post" required>
+          </div>
+          <div class="form-group">
+            <textarea name="meddelande" rows="4" placeholder="Ditt meddelande (bordsbokning eller fråga)" required></textarea>
+          </div>
+          <button type="submit" class="btn" style="width: 100%;">Skicka förfrågan</button>
+        </form>
+        <div id="formSuccess" style="display: none; margin-top: 16px; padding: 16px; background: #e6f4ea; border-radius: 12px; text-align: center; color: #2e7d32;">✓ Tack! Vi återkommer inom kort.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div><h4>Café Solna</h4><p>Ditt lokala café med hjärta för kvalitet och gemenskap.</p></div>
+      <div><h4>Öppettider</h4><p>Mån–Fre: 08–18<br>Lördag: 09–17<br>Söndag: 10–16</p></div>
+      <div><h4>Kontakt</h4><p>hej@cafesolna.se<br>08-123 45 67</p></div>
+      <div>
+        <h4>Följ oss</h4>
+        <div style="display:flex;gap:12px;margin-top:10px;flex-wrap:wrap;">
+          <a href="https://facebook.com/cafesolna" target="_blank" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1.5px solid #c0b0a0;color:#c0b0a0;">📘</a>
+          <a href="https://instagram.com/cafesolna" target="_blank" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1.5px solid #c0b0a0;color:#c0b0a0;">📷</a>
+          <a href="https://tiktok.com/@cafesolna" target="_blank" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1.5px solid #c0b0a0;color:#c0b0a0;">🎵</a>
+          <a href="mailto:hej@cafesolna.se" style="display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1.5px solid #c0b0a0;color:#c0b0a0;">✉️</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>© <span id="yr"></span> Café Solna – En del av <a href="https://lkwd.se" style="color:#c6a43b;">LKWD.se</a> demoserie | <a href="#" style="color: #c0b0a0;">Integritetspolicy</a></p></div>
+  </div>
+</footer>
+
+<section id="adminSection" class="admin-section">
+  <div class="container">
+    <div id="adminLogin" class="admin-login">
+      <h3>🔐 Admininloggning</h3>
+      <p><small>För caféägaren – testa och redigera innehållet själv!</small></p>
+      <input type="password" id="adminPassword" placeholder="Lösenord">
+      <button class="btn" id="loginBtn">Logga in</button>
+      <p style="margin-top: 12px; font-size: 0.75rem; color: #7a6a5a;">Demo-lösenord: <code style="background:#e8e0d8;">cafe2025</code></p>
+    </div>
+    <div id="adminContent" style="display: none;">
+      <div class="admin-panel">
+        <h3>⚙️ Redigera sidinnehåll</h3>
+        <label>🥗 Veckans lunch – rätt</label><input type="text" id="editLunchDesc">
+        <label>💰 Veckans lunch – pris</label><input type="text" id="editLunchPrice">
+        <hr>
+        <label>⭐ Recension 1 – text</label><textarea id="editReview1Text" rows="2"></textarea>
+        <label>⭐ Recension 2 – text</label><textarea id="editReview2Text" rows="2"></textarea>
+        <label>⭐ Recension 3 – text</label><textarea id="editReview3Text" rows="2"></textarea>
+        <div style="display: flex; gap: 16px; margin-top: 24px;">
+          <button class="btn" id="saveSettingsBtn">💾 Spara ändringar</button>
+          <button class="btn btn-outline" id="cancelAdminBtn">Stäng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ============================================================
+  // PHP API CONFIG – för permanent lagring (kräver PHP-host)
+  // Sätt USE_API = true när PHP-filerna är uppladdade på servern
+  // ============================================================
+  const USE_API = true;  // ← ÄNDRA TILL true när PHP är på plats
+  const API_BASE = 'lkwd-backend-production.up.railway.app';
+
+  // ============================================================
+  // API FUNKTIONER – ladda och spara data från/till JSON-filer
+  // ============================================================
+  async function apiLoad() {
+    try {
+      const res = await fetch(`${API_BASE}/api/load.php`);
+      if (!res.ok) throw new Error('API not available');
+      const data = await res.json();
+      if (data.settings) {
+        const ld = document.getElementById('lunchDesc');
+        const lp = document.getElementById('lunchPrice');
+        if (ld) ld.innerText = data.settings.lunch.description;
+        if (lp) lp.innerText = data.settings.lunch.price;
+        if (data.settings.reviews) updateReviews(data.settings.reviews);
+      }
+      if (data.badges) {
+        badges = data.badges;
+        renderAllBadges();
+      }
+    } catch(e) {
+      console.info('API not available, using localStorage');
+    }
+  }
+
+  async function apiSaveSettings(settings) {
+    if (!USE_API) return false;
+    try {
+      const res = await fetch(`${API_BASE}/admin/save.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'settings', data: settings })
+      });
+      const json = await res.json();
+      return json.success;
+    } catch(e) { return false; }
+  }
+
+  async function apiSaveBadges(badgeData) {
+    if (!USE_API) return false;
+    try {
+      const res = await fetch(`${API_BASE}/admin/save.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'badges', data: badgeData })
+      });
+      const json = await res.json();
+      return json.success;
+    } catch(e) { return false; }
+  }
+
+  function updateReviews(reviews) {
+    const grid = document.getElementById('reviewsGrid');
+    if (!grid || !reviews) return;
+    grid.innerHTML = reviews.map(r =>
+      `<div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"${r.text}"</div><div class="review-name">– ${r.name}</div><div class="review-title">${r.title}</div></div>`
+    ).join('');
+  }
+
+  // MOBILE MENU
+  const menuBtn = document.getElementById('mobileMenuBtn');
+  const navLinksEl = document.getElementById('navLinks');
+  if (menuBtn) menuBtn.addEventListener('click', () => navLinksEl.classList.toggle('active'));
+  if (navLinksEl) {
+    navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinksEl.classList.remove('active')));
+  }
+
+  // CONTACT FORM – FormSubmit (visar success message)
+  const cafeForm = document.querySelector('.contact-form form');
+  const cafeSuccess = document.getElementById('formSuccess');
+  if (cafeForm && cafeSuccess) {
+    cafeForm.addEventListener('submit', () => {
+      setTimeout(() => {
+        cafeSuccess.style.display = 'block';
+        cafeForm.reset();
+        setTimeout(() => { cafeSuccess.style.display = 'none'; }, 5000);
+      }, 500);
+    });
+  }
+
+  // ============================================================
+  // ADMIN STATE & BADGE SYSTEM
+  // ============================================================
+  let isAdmin = false;
+  let badges = JSON.parse(localStorage.getItem('cafe_badges') || '{}');
+
+  function setAdminMode(val) {
+    isAdmin = val;
+    document.body.classList.toggle('is-admin', val);
+  }
+
+  const categoryProducts = {
+    drinks: ["Bryggkaffe", "Kaffe Latte", "Cappuccino", "Chai Latte", "Matcha Latte"],
+    pastries: ["Kanelbulle", "Kardemummabulle", "Kladdkaka", "Croissant"],
+    lunch: ["Dagens soppa", "Toast Skagen", "Sallad med halloumi"]
+  };
+  const categoryNames = { drinks: "☕ Kaffe & dryck", pastries: "🥐 Bakverk", lunch: "🍽️ Lunch" };
+  const badgeTypes = {
+    'popular':    { class: 'badge-popular',    icon: '🏷️', text: 'Populärast' },
+    'bestseller': { class: 'badge-bestseller', icon: '🏆', text: 'Bästsäljare' }
+  };
+
+  function getProductCategory(p) {
+    for (const [cat, products] of Object.entries(categoryProducts)) if (products.includes(p)) return cat;
+    return null;
+  }
+
+  function renderAllBadges() {
+    document.querySelectorAll('.badge').forEach(b => b.remove());
+    for (const [productId, badgeInfo] of Object.entries(badges)) {
+      const div = document.querySelector(`.menu-item[data-product="${productId}"]`);
+      if (div) {
+        const h4 = div.querySelector('h4');
+        if (h4 && !h4.querySelector('.badge')) {
+          const type = badgeTypes[badgeInfo.type];
+          if (type) {
+            const span = document.createElement('span');
+            span.className = `badge ${type.class}`;
+            span.setAttribute('data-badge-id', badgeInfo.id);
+            span.setAttribute('data-product', productId);
+            span.innerHTML = `${type.icon} ${type.text}`;
+            h4.appendChild(span);
+          }
+        }
+      }
+    }
+    document.querySelectorAll('.menu-item').forEach(item => {
+      if (!item.querySelector('.admin-add-btn')) {
+        const product = item.dataset.product;
+        const btn = document.createElement('button');
+        btn.className = 'admin-add-btn';
+        btn.title = `Lägg till märkning på ${product}`;
+        btn.setAttribute('aria-label', `Lägg till märkning på ${product}`);
+        btn.textContent = '+';
+        btn.addEventListener('click', (e) => {
+          if (!isAdmin) return;
+          e.stopPropagation();
+          showAddPopup(btn, product);
+        });
+        const h4 = item.querySelector('h4');
+        if (h4) h4.appendChild(btn);
+      }
+    });
+    attachBadgeListeners();
+  }
+
+  function removeBadge(p) {
+    if (badges[p]) {
+      delete badges[p];
+      localStorage.setItem('cafe_badges', JSON.stringify(badges));
+      apiSaveBadges(badges);
+      renderAllBadges();
+    }
+  }
+
+  function addBadge(p, type, id) {
+    badges[p] = { type, id };
+    localStorage.setItem('cafe_badges', JSON.stringify(badges));
+    apiSaveBadges(badges);
+    renderAllBadges();
+  }
+
+  let activePopup = null;
+  function closePopup() { if (activePopup) { activePopup.remove(); activePopup = null; } }
+  function positionPopup(popup, anchorEl) {
+    const rect = anchorEl.getBoundingClientRect();
+    let left = rect.left, top = rect.bottom + 5;
+    if (top + 400 > window.innerHeight) top = rect.top - 400;
+    if (left + 280 > window.innerWidth) left = window.innerWidth - 290;
+    popup.style.left = Math.max(10, left) + 'px';
+    popup.style.top = Math.max(10, top) + 'px';
+  }
+  function attachCloseListener(popup, anchorEl) {
+    setTimeout(() => {
+      const close = (e) => {
+        if (popup && !popup.contains(e.target) && !anchorEl.contains(e.target)) {
+          closePopup(); document.removeEventListener('click', close);
+        }
+      };
+      document.addEventListener('click', close);
+    }, 10);
+  }
+
+  function showBadgePopup(badgeEl, curProduct, curType, badgeId) {
+    if (!isAdmin) return;
+    closePopup();
+    const cat = getProductCategory(curProduct);
+    const sameCat = cat ? categoryProducts[cat] : [];
+    let html = `<div class="title">✏️ Ändra märkning</div>
+      <button data-action="change-type" data-type="popular">🏷️ Populärast</button>
+      <button data-action="change-type" data-type="bestseller">🏆 Bästsäljare</button>
+      <hr><div class="title">📦 Flytta inom ${categoryNames[cat] || 'kategorin'}</div>`;
+    for (const p of sameCat) if (p !== curProduct) html += `<button data-action="move" data-product="${p}">→ ${p}</button>`;
+    html += `<hr><button data-action="delete" style="color:#c0392b;">🗑️ Ta bort märkning</button>`;
+    const popup = document.createElement('div');
+    popup.className = 'badge-popup'; popup.innerHTML = html;
+    positionPopup(popup, badgeEl);
+    document.body.appendChild(popup); activePopup = popup;
+    popup.addEventListener('click', (e) => {
+      const btn = e.target.closest('button'); if (!btn) return;
+      const action = btn.dataset.action;
+      if (action === 'change-type') { addBadge(curProduct, btn.dataset.type, badgeId); closePopup(); }
+      else if (action === 'move')   { addBadge(btn.dataset.product, curType, badgeId); closePopup(); }
+      else if (action === 'delete') { removeBadge(curProduct); closePopup(); }
+    });
+    attachCloseListener(popup, badgeEl);
+  }
+
+  function showAddPopup(addBtn, product) {
+    closePopup();
+    let html = `<div class="title">➕ Märk "${product}"</div>
+      <button data-action="add" data-type="popular">🏷️ Populärast</button>
+      <button data-action="add" data-type="bestseller">🏆 Bästsäljare</button>`;
+    if (badges[product]) {
+      html += `<hr><button data-action="remove" style="color:#c0392b;">🗑️ Ta bort märkning</button>`;
+    }
+    const popup = document.createElement('div');
+    popup.className = 'badge-popup'; popup.innerHTML = html;
+    positionPopup(popup, addBtn);
+    document.body.appendChild(popup); activePopup = popup;
+    popup.addEventListener('click', (e) => {
+      const btn = e.target.closest('button'); if (!btn) return;
+      if (btn.dataset.action === 'add')    { addBadge(product, btn.dataset.type, 'badge-' + Date.now()); closePopup(); }
+      if (btn.dataset.action === 'remove') { removeBadge(product); closePopup(); }
+    });
+    attachCloseListener(popup, addBtn);
+  }
+
+  function attachBadgeListeners() {
+    document.querySelectorAll('.badge').forEach(b => {
+      b.removeEventListener('click', b._l);
+      b._l = (e) => {
+        if (!isAdmin) return;
+        e.stopPropagation();
+        const p = b.dataset.product, info = badges[p];
+        if (info) showBadgePopup(b, p, info.type, info.id);
+      };
+      b.addEventListener('click', b._l);
+    });
+  }
+
+  function initBadges() {
+    if (Object.keys(badges).length === 0) {
+      badges = { "Bryggkaffe": { type: "popular", id: "pop1" }, "Cappuccino": { type: "bestseller", id: "pop2" }, "Kardemummabulle": { type: "popular", id: "pop3" }, "Dagens soppa": { type: "bestseller", id: "pop4" } };
+      localStorage.setItem('cafe_badges', JSON.stringify(badges));
+    }
+    renderAllBadges();
+  }
+  initBadges();
+
+  // Ladda data från API om tillgängligt
+  if (USE_API) apiLoad();
+
+  // ============================================================
+  // ADMIN PANEL
+  // ============================================================
+  const aLogin = document.getElementById('adminLogin'), aContent = document.getElementById('adminContent');
+  const lBtn = document.getElementById('loginBtn'), sBtn = document.getElementById('saveSettingsBtn'), cBtn = document.getElementById('cancelAdminBtn');
+
+  function showAdmin() { const s = document.getElementById('adminSection'); if (s) s.style.display = 'block'; }
+  function hideAdmin() {
+    const s = document.getElementById('adminSection'); if (!s) return;
+    s.style.display = 'none';
+    setAdminMode(false);
+    if (aLogin) aLogin.style.display = 'block';
+    if (aContent) aContent.style.display = 'none';
+    const pw = document.getElementById('adminPassword'); if (pw) pw.value = '';
+  }
+  function checkAdminUrl() {
+    (window.location.hash === '#admin' || window.location.search.includes('admin')) ? showAdmin() : hideAdmin();
+  }
+  checkAdminUrl();
+  window.addEventListener('hashchange', checkAdminUrl);
+
+  function loadSettings() {
+    document.getElementById('editLunchDesc').value = document.getElementById('lunchDesc').innerText;
+    document.getElementById('editLunchPrice').value = document.getElementById('lunchPrice').innerText;
+    const revs = document.querySelectorAll('.review-card');
+    if (revs[0]) document.getElementById('editReview1Text').value = revs[0].querySelector('.review-text')?.innerText.trim() || '';
+    if (revs[1]) document.getElementById('editReview2Text').value = revs[1].querySelector('.review-text')?.innerText.trim() || '';
+    if (revs[2]) document.getElementById('editReview3Text').value = revs[2].querySelector('.review-text')?.innerText.trim() || '';
+  }
+
+  if (lBtn) {
+    lBtn.addEventListener('click', () => {
+      if (document.getElementById('adminPassword').value === 'cafe2025') {
+        aLogin.style.display = 'none';
+        aContent.style.display = 'block';
+        loadSettings();
+        setAdminMode(true);
+      } else {
+        alert('Fel lösenord.');
+      }
+    });
+  }
+
+  if (sBtn) {
+    sBtn.addEventListener('click', async () => {
+      const lunchDesc = document.getElementById('editLunchDesc').value;
+      const lunchPrice = document.getElementById('editLunchPrice').value;
+      const texts = [
+        document.getElementById('editReview1Text').value,
+        document.getElementById('editReview2Text').value,
+        document.getElementById('editReview3Text').value
+      ];
+      const names = ["Maria, Solna", "Johan, Stockholm", "Anna, Sundbyberg"];
+      const titles = ["Återkommande gäst", "Lunchgäst", "Jobbar på distans"];
+
+      // Update DOM
+      document.getElementById('lunchDesc').innerText = lunchDesc;
+      document.getElementById('lunchPrice').innerText = lunchPrice;
+      updateReviews(texts.map((t, i) => ({ text: t, name: names[i], title: titles[i] })));
+
+      // Save to API (if available)
+      const settings = {
+        lunch: { description: lunchDesc, price: lunchPrice },
+        reviews: texts.map((t, i) => ({ text: t, name: names[i], title: titles[i] }))
+      };
+      await apiSaveSettings(settings);
+
+      alert('Ändringar sparade!');
+      aLogin.style.display = 'block';
+      aContent.style.display = 'none';
+      document.getElementById('adminPassword').value = '';
+      setAdminMode(false);
+    });
+  }
+
+  if (cBtn) {
+    cBtn.addEventListener('click', () => {
+      aLogin.style.display = 'block';
+      aContent.style.display = 'none';
+      document.getElementById('adminPassword').value = '';
+      setAdminMode(false);
+    });
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "Bryggkaffe": { "type": "popular", "id": "pop1" },
+  "Cappuccino": { "type": "bestseller", "id": "pop2" },
+  "Kardemummabulle": { "type": "popular", "id": "pop3" },
+  "Dagens soppa": { "type": "bestseller", "id": "pop4" }
+}
