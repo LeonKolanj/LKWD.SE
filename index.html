@@ -813,7 +813,8 @@
   </div>
 </div>
 
-<form name="lkwd-offert" netlify netlify-honeypot="bot-field" hidden>
+<form id="netlify-offert-form" name="lkwd-offert" netlify netlify-honeypot="bot-field" method="POST" action="/?offert=1" hidden>
+  <input type="hidden" name="form-name" value="lkwd-offert">
   <input type="text" name="namn" /><input type="email" name="epost" /><input type="tel" name="telefon" />
   <input type="text" name="paket" /><input type="text" name="drift" /><input type="text" name="totalt" />
   <textarea name="meddelande"></textarea><input type="text" name="bot-field" />
@@ -896,31 +897,21 @@
   const cookieSettingsFooter = document.getElementById('cookieSettingsFooter');
   if (cookieSettingsFooter) cookieSettingsFooter.addEventListener('click', e => { e.preventDefault(); loadSavedPrefs(); openModal(); });
 
-  // Contact form — fetch submit so we stay on page and show success msg
+  // Contact form — native submit to Netlify, show success if returning from submit
   const netlifyForm = document.getElementById('kontaktForm');
   const successDiv  = document.getElementById('formSuccess');
-  if (netlifyForm && successDiv) {
-    netlifyForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitButton');
-      btn.disabled = true;
-      btn.textContent = 'Skickar…';
-      const data = new FormData(netlifyForm);
-      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() })
-        .then(r => {
-          if (!r.ok) throw new Error(r.status);
-          successDiv.style.display = 'block';
-          netlifyForm.reset();
-          btn.disabled = false;
-          btn.textContent = 'Skicka meddelande';
-          setTimeout(() => { successDiv.style.display = 'none'; }, 6000);
-        })
-        .catch(() => {
-          btn.disabled = false;
-          btn.textContent = 'Skicka meddelande';
-          alert('Något gick fel — försök igen eller maila leon@lkwd.se');
-        });
-    });
+  if (new URLSearchParams(window.location.search).get('skickat') === '1') {
+    successDiv.style.display = 'block';
+    document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => { successDiv.style.display = 'none'; }, 6000);
+  }
+  // Offert cart — show thank you if returning from offert submit
+  if (new URLSearchParams(window.location.search).get('offert') === '1') {
+    const thanks = document.createElement('div');
+    thanks.style.cssText = 'position:fixed;top:24px;left:50%;transform:translateX(-50%);background:#2a5a3a;color:#fff;padding:16px 32px;border-radius:8px;z-index:9999;font-size:0.9rem;box-shadow:0 8px 24px rgba(0,0,0,0.3);';
+    thanks.textContent = '✓ Offert skickad! Jag återkommer inom 24 timmar.';
+    document.body.appendChild(thanks);
+    setTimeout(() => thanks.remove(), 6000);
   }
 
   const bestallLink = document.getElementById('cafeBestallLink');
@@ -1054,14 +1045,16 @@
       cartNext.disabled = true; cartNext.textContent = 'Skickar…';
       const tel = document.getElementById('cftel').value.trim();
       const webNumLocal = parseInt((cart.web && cart.web.price || '').replace(/[^0-9]/g,'')) || 0;
-      const payload = { 'form-name': 'lkwd-offert', namn: n, epost: em, telefon: tel, paket: cart.web ? cart.web.pkg : '', drift: cart.drift ? (cart.drift.drift + ' (' + cart.drift.monthly + ' kr/mån)') : '', totalt: webNumLocal ? (webNumLocal.toLocaleString('sv-SE') + ' kr engång' + (cart.drift && cart.drift.monthly ? ' + ' + cart.drift.monthly + ' kr/mån' : '')) : '', meddelande: msg, 'bot-field': '' };
-      const body = Object.keys(payload).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(payload[k])).join('&');
-      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body })
-        .then(r => {
-          if (!r.ok && r.status !== 200 && r.status !== 303) throw new Error('Network');
-          document.getElementById('cart-form').reset(); document.getElementById('cart-success').style.display = 'block'; cartNext.disabled = false; cartNext.textContent = 'Börja Projekt'; setTimeout(() => { document.getElementById('cart-success').style.display = 'none'; closeCart(); }, 4000);
-        })
-        .catch(() => { cartNext.disabled = false; cartNext.textContent = 'Börja Projekt'; alert('Något gick fel — försök igen eller maila leon@lkwd.se'); });
+      // Submit via hidden native form so Netlify accepts it
+      const hf = document.getElementById('netlify-offert-form');
+      hf.querySelector('[name=namn]').value      = n;
+      hf.querySelector('[name=epost]').value     = em;
+      hf.querySelector('[name=telefon]').value   = tel;
+      hf.querySelector('[name=paket]').value     = cart.web ? cart.web.pkg : '';
+      hf.querySelector('[name=drift]').value     = cart.drift ? (cart.drift.drift + ' (' + cart.drift.monthly + ' kr/mån)') : '';
+      hf.querySelector('[name=totalt]').value    = webNumLocal ? (webNumLocal.toLocaleString('sv-SE') + ' kr engång' + (cart.drift && cart.drift.monthly ? ' + ' + cart.drift.monthly + ' kr/mån' : '')) : '';
+      hf.querySelector('[name=meddelande]').value = msg;
+      hf.submit();
     }
   });
   cartBack.addEventListener('click', () => setStep(1));
