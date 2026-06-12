@@ -745,8 +745,9 @@
         <div style="margin-top:24px;display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;background:#4ade80;border-radius:50%;display:inline-block;"></span> Tillgänglig — svarar inom 24 timmar</div>
       </div>
       <div class="contact-form">
-        <form netlify name="lkwd-kontakt" netlify-honeypot="bot-field" method="POST" action="/?skickat=1" id="kontaktForm">
-          <input type="hidden" name="form-name" value="lkwd-kontakt">
+        <form name="lkwd-kontakt" method="POST" action="https://formspree.io/f/mzdqkdww" id="kontaktForm">
+          <input type="hidden" name="_next" value="https://lkwd.se/?skickat=1">
+          <input type="hidden" name="_subject" value="Ny förfrågan — LKWD.se">
           <div class="form-group"><input type="text" name="namn" placeholder="Ditt namn" id="contactName" required></div>
           <div class="form-group"><input type="email" name="epost" placeholder="Din e-post" id="contactEmail" required></div>
           <div class="form-group">
@@ -768,7 +769,7 @@
             <div id="driftHint" style="font-size:0.78rem;color:#9a9590;margin-top:6px;display:none;"></div>
           </div>
           <div class="form-group"><textarea name="meddelande" rows="4" placeholder="Berätta om din verksamhet..." required></textarea></div>
-          <div style="display:none;"><input type="text" name="bot-field"></div>
+          <div style="display:none;"><input type="text" name="_gotcha"></div>
           <button type="submit" class="form-btn" id="submitButton">Skicka meddelande</button>
         </form>
         <div id="formSuccess" style="display:none;margin-top:16px;padding:12px;background:#2a5a3a;border-radius:8px;text-align:center;">✓ Tack! Jag återkommer inom 24 timmar.</div>
@@ -813,11 +814,17 @@
   </div>
 </div>
 
-<form id="netlify-offert-form" name="lkwd-offert" netlify netlify-honeypot="bot-field" method="POST" action="/?offert=1" hidden>
-  <input type="hidden" name="form-name" value="lkwd-offert">
-  <input type="text" name="namn" /><input type="email" name="epost" /><input type="tel" name="telefon" />
-  <input type="text" name="paket" /><input type="text" name="drift" /><input type="text" name="totalt" />
-  <textarea name="meddelande"></textarea><input type="text" name="bot-field" />
+<form id="netlify-offert-form" method="POST" action="https://formspree.io/f/mgobpoqg" hidden>
+  <input type="hidden" name="_subject" value="Ny offertförfrågan — LKWD.se">
+  <input type="hidden" name="_next" value="https://lkwd.se/?offert=1">
+  <input type="hidden" name="_gotcha">
+  <input type="text" name="namn" />
+  <input type="email" name="epost" />
+  <input type="tel" name="telefon" />
+  <input type="text" name="paket" />
+  <input type="text" name="drift" />
+  <input type="text" name="totalt" />
+  <textarea name="meddelande"></textarea>
 </form>
 
 <div id="cart-overlay"></div>
