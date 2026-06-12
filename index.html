@@ -745,7 +745,7 @@
         <div style="margin-top:24px;display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;background:#4ade80;border-radius:50%;display:inline-block;"></span> Tillgänglig — svarar inom 24 timmar</div>
       </div>
       <div class="contact-form">
-        <form netlify name="lkwd-kontakt" netlify-honeypot="bot-field" method="POST">
+        <form netlify name="lkwd-kontakt" netlify-honeypot="bot-field" method="POST" action="/?skickat=1" id="kontaktForm">
           <input type="hidden" name="form-name" value="lkwd-kontakt">
           <div class="form-group"><input type="text" name="namn" placeholder="Ditt namn" id="contactName" required></div>
           <div class="form-group"><input type="email" name="epost" placeholder="Din e-post" id="contactEmail" required></div>
@@ -896,10 +896,32 @@
   const cookieSettingsFooter = document.getElementById('cookieSettingsFooter');
   if (cookieSettingsFooter) cookieSettingsFooter.addEventListener('click', e => { e.preventDefault(); loadSavedPrefs(); openModal(); });
 
-  // Contact form
-  const netlifyForm = document.querySelector('form[netlify]');
+  // Contact form — fetch submit so we stay on page and show success msg
+  const netlifyForm = document.getElementById('kontaktForm');
   const successDiv  = document.getElementById('formSuccess');
-  if (netlifyForm && successDiv) { netlifyForm.addEventListener('submit', function() { setTimeout(() => { successDiv.style.display = 'block'; netlifyForm.reset(); setTimeout(() => { successDiv.style.display = 'none'; }, 5000); }, 500); }); }
+  if (netlifyForm && successDiv) {
+    netlifyForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitButton');
+      btn.disabled = true;
+      btn.textContent = 'Skickar…';
+      const data = new FormData(netlifyForm);
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() })
+        .then(r => {
+          if (!r.ok) throw new Error(r.status);
+          successDiv.style.display = 'block';
+          netlifyForm.reset();
+          btn.disabled = false;
+          btn.textContent = 'Skicka meddelande';
+          setTimeout(() => { successDiv.style.display = 'none'; }, 6000);
+        })
+        .catch(() => {
+          btn.disabled = false;
+          btn.textContent = 'Skicka meddelande';
+          alert('Något gick fel — försök igen eller maila leon@lkwd.se');
+        });
+    });
+  }
 
   const bestallLink = document.getElementById('cafeBestallLink');
   if (bestallLink) bestallLink.addEventListener('click', e => { e.preventDefault(); document.getElementById('priser').scrollIntoView({ behavior: 'smooth' }); });
@@ -1035,7 +1057,10 @@
       const payload = { 'form-name': 'lkwd-offert', namn: n, epost: em, telefon: tel, paket: cart.web ? cart.web.pkg : '', drift: cart.drift ? (cart.drift.drift + ' (' + cart.drift.monthly + ' kr/mån)') : '', totalt: webNumLocal ? (webNumLocal.toLocaleString('sv-SE') + ' kr engång' + (cart.drift && cart.drift.monthly ? ' + ' + cart.drift.monthly + ' kr/mån' : '')) : '', meddelande: msg, 'bot-field': '' };
       const body = Object.keys(payload).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(payload[k])).join('&');
       fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body })
-        .then(r => { if (!r.ok) throw new Error('Network'); document.getElementById('cart-form').reset(); document.getElementById('cart-success').style.display = 'block'; cartNext.disabled = false; cartNext.textContent = 'Börja Projekt'; setTimeout(() => { document.getElementById('cart-success').style.display = 'none'; closeCart(); }, 4000); })
+        .then(r => {
+          if (!r.ok && r.status !== 200 && r.status !== 303) throw new Error('Network');
+          document.getElementById('cart-form').reset(); document.getElementById('cart-success').style.display = 'block'; cartNext.disabled = false; cartNext.textContent = 'Börja Projekt'; setTimeout(() => { document.getElementById('cart-success').style.display = 'none'; closeCart(); }, 4000);
+        })
         .catch(() => { cartNext.disabled = false; cartNext.textContent = 'Börja Projekt'; alert('Något gick fel — försök igen eller maila leon@lkwd.se'); });
     }
   });
