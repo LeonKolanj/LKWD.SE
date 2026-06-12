@@ -892,7 +892,7 @@
   savePrefsBtn.addEventListener('click', () => saveCookiePrefs(statsCheckbox.checked, marketingCheckbox.checked));
   modalClose.addEventListener('click', closeModal);
   cookieModal.addEventListener('click', e => { if (e.target === cookieModal) closeModal(); });
-  document.querySelectorAll('#privacyLink, #cookiePrivacyLink').forEach(link => { link.addEventListener('click', e => { e.preventDefault(); alert('Integritetspolicy: Jag samlar endast in information som du själv lämnar via kontaktformuläret. Jag säljer aldrig dina uppgifter. Frågor: leon@lkwd.se'); }); });
+  document.querySelectorAll('#privacyLink, #cookiePrivacyLink').forEach(link => { link.addEventListener('click', e => { e.preventDefault(); window.location.href = 'integritetspolicy.html'; }); });
   const cookieSettingsFooter = document.getElementById('cookieSettingsFooter');
   if (cookieSettingsFooter) cookieSettingsFooter.addEventListener('click', e => { e.preventDefault(); loadSavedPrefs(); openModal(); });
 
