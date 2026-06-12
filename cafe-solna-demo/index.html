@@ -236,25 +236,6 @@
     .insta-item:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
     .insta-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    .comparison {
-      background: #e8e0d8;
-      border-radius: 24px;
-      padding: 40px;
-      margin: 40px 0;
-    }
-    .comparison-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-      text-align: center;
-    }
-    .comparison-card { background: white; border-radius: 20px; padding: 24px; }
-    .comparison-card h4 { font-size: 1.2rem; margin-bottom: 16px; }
-    .comparison-card .price { font-size: 2rem; font-weight: 700; color: #2f5d3a; margin: 16px 0; }
-    .comparison-card ul { list-style: none; text-align: left; margin-top: 16px; }
-    .comparison-card li { padding: 8px 0; border-bottom: 1px solid #e8e0d8; }
-    li.cross { color: #c0a0a0; }
-
     .info-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -352,7 +333,7 @@
       text-align: center;
       border: 2px solid #2f5d3a;
     }
-    .admin-login input { width: 100%; padding: 12px; margin: 16px 0; border: 1px solid #e0d4c8; border-radius: 12px; }
+    .admin-login input { width: 100%; padding: 12px; margin: 16px 0 8px; border: 1px solid #e0d4c8; border-radius: 12px; }
 
     footer {
       background: #1a2a1f;
@@ -425,7 +406,6 @@
     @media (max-width: 768px) {
       .hero-grid, .info-grid { grid-template-columns: 1fr; }
       .instagram-grid { grid-template-columns: repeat(2, 1fr); }
-      .comparison-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
       .mobile-menu-btn { display: block; }
       .nav-links.active {
@@ -644,12 +624,17 @@
   </div>
 </footer>
 
-<section id="adminSection" class="admin-section">
+<!-- ═══════════════════════════════════════════════════
+     ADMIN SECTION — visas bara via #admin i URL:en
+════════════════════════════════════════════════════ -->
+<section id="adminSection" class="admin-section" style="display:none;">
   <div class="container">
     <div id="adminLogin" class="admin-login">
       <h3>🔐 Admininloggning</h3>
       <p><small>För caféägaren – testa och redigera innehållet själv!</small></p>
       <input type="password" id="adminPassword" placeholder="Lösenord">
+      <!-- ▼ NYT: felmeddelande visas här av cafe-admin.js -->
+      <div id="adminLoginError" style="display:none; margin-bottom:8px; color:#c0392b; font-size:0.8rem;"></div>
       <button class="btn" id="loginBtn">Logga in</button>
       <p style="margin-top: 12px; font-size: 0.75rem; color: #7a6a5a;">Demo-lösenord: <code style="background:#e8e0d8;">cafe2025</code></p>
     </div>
@@ -671,351 +656,7 @@
   </div>
 </section>
 
-<script>
-  document.getElementById('yr').textContent = new Date().getFullYear();
-
-  // ============================================================
-  // PHP API CONFIG – för permanent lagring (kräver PHP-host)
-  // Sätt USE_API = true när PHP-filerna är uppladdade på servern
-  // ============================================================
-  const USE_API = true;  // ← ÄNDRA TILL true när PHP är på plats
-  const API_BASE = 'lkwd-backend-production.up.railway.app';
-
-  // ============================================================
-  // API FUNKTIONER – ladda och spara data från/till JSON-filer
-  // ============================================================
-  async function apiLoad() {
-    try {
-      const res = await fetch(`${API_BASE}/api/load.php`);
-      if (!res.ok) throw new Error('API not available');
-      const data = await res.json();
-      if (data.settings) {
-        const ld = document.getElementById('lunchDesc');
-        const lp = document.getElementById('lunchPrice');
-        if (ld) ld.innerText = data.settings.lunch.description;
-        if (lp) lp.innerText = data.settings.lunch.price;
-        if (data.settings.reviews) updateReviews(data.settings.reviews);
-      }
-      if (data.badges) {
-        badges = data.badges;
-        renderAllBadges();
-      }
-    } catch(e) {
-      console.info('API not available, using localStorage');
-    }
-  }
-
-  async function apiSaveSettings(settings) {
-    if (!USE_API) return false;
-    try {
-      const res = await fetch(`${API_BASE}/admin/save.php`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'settings', data: settings })
-      });
-      const json = await res.json();
-      return json.success;
-    } catch(e) { return false; }
-  }
-
-  async function apiSaveBadges(badgeData) {
-    if (!USE_API) return false;
-    try {
-      const res = await fetch(`${API_BASE}/admin/save.php`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'badges', data: badgeData })
-      });
-      const json = await res.json();
-      return json.success;
-    } catch(e) { return false; }
-  }
-
-  function updateReviews(reviews) {
-    const grid = document.getElementById('reviewsGrid');
-    if (!grid || !reviews) return;
-    grid.innerHTML = reviews.map(r =>
-      `<div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"${r.text}"</div><div class="review-name">– ${r.name}</div><div class="review-title">${r.title}</div></div>`
-    ).join('');
-  }
-
-  // MOBILE MENU
-  const menuBtn = document.getElementById('mobileMenuBtn');
-  const navLinksEl = document.getElementById('navLinks');
-  if (menuBtn) menuBtn.addEventListener('click', () => navLinksEl.classList.toggle('active'));
-  if (navLinksEl) {
-    navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinksEl.classList.remove('active')));
-  }
-
-  // CONTACT FORM – FormSubmit (visar success message)
-  const cafeForm = document.querySelector('.contact-form form');
-  const cafeSuccess = document.getElementById('formSuccess');
-  if (cafeForm && cafeSuccess) {
-    cafeForm.addEventListener('submit', () => {
-      setTimeout(() => {
-        cafeSuccess.style.display = 'block';
-        cafeForm.reset();
-        setTimeout(() => { cafeSuccess.style.display = 'none'; }, 5000);
-      }, 500);
-    });
-  }
-
-  // ============================================================
-  // ADMIN STATE & BADGE SYSTEM
-  // ============================================================
-  let isAdmin = false;
-  let badges = JSON.parse(localStorage.getItem('cafe_badges') || '{}');
-
-  function setAdminMode(val) {
-    isAdmin = val;
-    document.body.classList.toggle('is-admin', val);
-  }
-
-  const categoryProducts = {
-    drinks: ["Bryggkaffe", "Kaffe Latte", "Cappuccino", "Chai Latte", "Matcha Latte"],
-    pastries: ["Kanelbulle", "Kardemummabulle", "Kladdkaka", "Croissant"],
-    lunch: ["Dagens soppa", "Toast Skagen", "Sallad med halloumi"]
-  };
-  const categoryNames = { drinks: "☕ Kaffe & dryck", pastries: "🥐 Bakverk", lunch: "🍽️ Lunch" };
-  const badgeTypes = {
-    'popular':    { class: 'badge-popular',    icon: '🏷️', text: 'Populärast' },
-    'bestseller': { class: 'badge-bestseller', icon: '🏆', text: 'Bästsäljare' }
-  };
-
-  function getProductCategory(p) {
-    for (const [cat, products] of Object.entries(categoryProducts)) if (products.includes(p)) return cat;
-    return null;
-  }
-
-  function renderAllBadges() {
-    document.querySelectorAll('.badge').forEach(b => b.remove());
-    for (const [productId, badgeInfo] of Object.entries(badges)) {
-      const div = document.querySelector(`.menu-item[data-product="${productId}"]`);
-      if (div) {
-        const h4 = div.querySelector('h4');
-        if (h4 && !h4.querySelector('.badge')) {
-          const type = badgeTypes[badgeInfo.type];
-          if (type) {
-            const span = document.createElement('span');
-            span.className = `badge ${type.class}`;
-            span.setAttribute('data-badge-id', badgeInfo.id);
-            span.setAttribute('data-product', productId);
-            span.innerHTML = `${type.icon} ${type.text}`;
-            h4.appendChild(span);
-          }
-        }
-      }
-    }
-    document.querySelectorAll('.menu-item').forEach(item => {
-      if (!item.querySelector('.admin-add-btn')) {
-        const product = item.dataset.product;
-        const btn = document.createElement('button');
-        btn.className = 'admin-add-btn';
-        btn.title = `Lägg till märkning på ${product}`;
-        btn.setAttribute('aria-label', `Lägg till märkning på ${product}`);
-        btn.textContent = '+';
-        btn.addEventListener('click', (e) => {
-          if (!isAdmin) return;
-          e.stopPropagation();
-          showAddPopup(btn, product);
-        });
-        const h4 = item.querySelector('h4');
-        if (h4) h4.appendChild(btn);
-      }
-    });
-    attachBadgeListeners();
-  }
-
-  function removeBadge(p) {
-    if (badges[p]) {
-      delete badges[p];
-      localStorage.setItem('cafe_badges', JSON.stringify(badges));
-      apiSaveBadges(badges);
-      renderAllBadges();
-    }
-  }
-
-  function addBadge(p, type, id) {
-    badges[p] = { type, id };
-    localStorage.setItem('cafe_badges', JSON.stringify(badges));
-    apiSaveBadges(badges);
-    renderAllBadges();
-  }
-
-  let activePopup = null;
-  function closePopup() { if (activePopup) { activePopup.remove(); activePopup = null; } }
-  function positionPopup(popup, anchorEl) {
-    const rect = anchorEl.getBoundingClientRect();
-    let left = rect.left, top = rect.bottom + 5;
-    if (top + 400 > window.innerHeight) top = rect.top - 400;
-    if (left + 280 > window.innerWidth) left = window.innerWidth - 290;
-    popup.style.left = Math.max(10, left) + 'px';
-    popup.style.top = Math.max(10, top) + 'px';
-  }
-  function attachCloseListener(popup, anchorEl) {
-    setTimeout(() => {
-      const close = (e) => {
-        if (popup && !popup.contains(e.target) && !anchorEl.contains(e.target)) {
-          closePopup(); document.removeEventListener('click', close);
-        }
-      };
-      document.addEventListener('click', close);
-    }, 10);
-  }
-
-  function showBadgePopup(badgeEl, curProduct, curType, badgeId) {
-    if (!isAdmin) return;
-    closePopup();
-    const cat = getProductCategory(curProduct);
-    const sameCat = cat ? categoryProducts[cat] : [];
-    let html = `<div class="title">✏️ Ändra märkning</div>
-      <button data-action="change-type" data-type="popular">🏷️ Populärast</button>
-      <button data-action="change-type" data-type="bestseller">🏆 Bästsäljare</button>
-      <hr><div class="title">📦 Flytta inom ${categoryNames[cat] || 'kategorin'}</div>`;
-    for (const p of sameCat) if (p !== curProduct) html += `<button data-action="move" data-product="${p}">→ ${p}</button>`;
-    html += `<hr><button data-action="delete" style="color:#c0392b;">🗑️ Ta bort märkning</button>`;
-    const popup = document.createElement('div');
-    popup.className = 'badge-popup'; popup.innerHTML = html;
-    positionPopup(popup, badgeEl);
-    document.body.appendChild(popup); activePopup = popup;
-    popup.addEventListener('click', (e) => {
-      const btn = e.target.closest('button'); if (!btn) return;
-      const action = btn.dataset.action;
-      if (action === 'change-type') { addBadge(curProduct, btn.dataset.type, badgeId); closePopup(); }
-      else if (action === 'move')   { addBadge(btn.dataset.product, curType, badgeId); closePopup(); }
-      else if (action === 'delete') { removeBadge(curProduct); closePopup(); }
-    });
-    attachCloseListener(popup, badgeEl);
-  }
-
-  function showAddPopup(addBtn, product) {
-    closePopup();
-    let html = `<div class="title">➕ Märk "${product}"</div>
-      <button data-action="add" data-type="popular">🏷️ Populärast</button>
-      <button data-action="add" data-type="bestseller">🏆 Bästsäljare</button>`;
-    if (badges[product]) {
-      html += `<hr><button data-action="remove" style="color:#c0392b;">🗑️ Ta bort märkning</button>`;
-    }
-    const popup = document.createElement('div');
-    popup.className = 'badge-popup'; popup.innerHTML = html;
-    positionPopup(popup, addBtn);
-    document.body.appendChild(popup); activePopup = popup;
-    popup.addEventListener('click', (e) => {
-      const btn = e.target.closest('button'); if (!btn) return;
-      if (btn.dataset.action === 'add')    { addBadge(product, btn.dataset.type, 'badge-' + Date.now()); closePopup(); }
-      if (btn.dataset.action === 'remove') { removeBadge(product); closePopup(); }
-    });
-    attachCloseListener(popup, addBtn);
-  }
-
-  function attachBadgeListeners() {
-    document.querySelectorAll('.badge').forEach(b => {
-      b.removeEventListener('click', b._l);
-      b._l = (e) => {
-        if (!isAdmin) return;
-        e.stopPropagation();
-        const p = b.dataset.product, info = badges[p];
-        if (info) showBadgePopup(b, p, info.type, info.id);
-      };
-      b.addEventListener('click', b._l);
-    });
-  }
-
-  function initBadges() {
-    if (Object.keys(badges).length === 0) {
-      badges = { "Bryggkaffe": { type: "popular", id: "pop1" }, "Cappuccino": { type: "bestseller", id: "pop2" }, "Kardemummabulle": { type: "popular", id: "pop3" }, "Dagens soppa": { type: "bestseller", id: "pop4" } };
-      localStorage.setItem('cafe_badges', JSON.stringify(badges));
-    }
-    renderAllBadges();
-  }
-  initBadges();
-
-  // Ladda data från API om tillgängligt
-  if (USE_API) apiLoad();
-
-  // ============================================================
-  // ADMIN PANEL
-  // ============================================================
-  const aLogin = document.getElementById('adminLogin'), aContent = document.getElementById('adminContent');
-  const lBtn = document.getElementById('loginBtn'), sBtn = document.getElementById('saveSettingsBtn'), cBtn = document.getElementById('cancelAdminBtn');
-
-  function showAdmin() { const s = document.getElementById('adminSection'); if (s) s.style.display = 'block'; }
-  function hideAdmin() {
-    const s = document.getElementById('adminSection'); if (!s) return;
-    s.style.display = 'none';
-    setAdminMode(false);
-    if (aLogin) aLogin.style.display = 'block';
-    if (aContent) aContent.style.display = 'none';
-    const pw = document.getElementById('adminPassword'); if (pw) pw.value = '';
-  }
-  function checkAdminUrl() {
-    (window.location.hash === '#admin' || window.location.search.includes('admin')) ? showAdmin() : hideAdmin();
-  }
-  checkAdminUrl();
-  window.addEventListener('hashchange', checkAdminUrl);
-
-  function loadSettings() {
-    document.getElementById('editLunchDesc').value = document.getElementById('lunchDesc').innerText;
-    document.getElementById('editLunchPrice').value = document.getElementById('lunchPrice').innerText;
-    const revs = document.querySelectorAll('.review-card');
-    if (revs[0]) document.getElementById('editReview1Text').value = revs[0].querySelector('.review-text')?.innerText.trim() || '';
-    if (revs[1]) document.getElementById('editReview2Text').value = revs[1].querySelector('.review-text')?.innerText.trim() || '';
-    if (revs[2]) document.getElementById('editReview3Text').value = revs[2].querySelector('.review-text')?.innerText.trim() || '';
-  }
-
-  if (lBtn) {
-    lBtn.addEventListener('click', () => {
-      if (document.getElementById('adminPassword').value === 'cafe2025') {
-        aLogin.style.display = 'none';
-        aContent.style.display = 'block';
-        loadSettings();
-        setAdminMode(true);
-      } else {
-        alert('Fel lösenord.');
-      }
-    });
-  }
-
-  if (sBtn) {
-    sBtn.addEventListener('click', async () => {
-      const lunchDesc = document.getElementById('editLunchDesc').value;
-      const lunchPrice = document.getElementById('editLunchPrice').value;
-      const texts = [
-        document.getElementById('editReview1Text').value,
-        document.getElementById('editReview2Text').value,
-        document.getElementById('editReview3Text').value
-      ];
-      const names = ["Maria, Solna", "Johan, Stockholm", "Anna, Sundbyberg"];
-      const titles = ["Återkommande gäst", "Lunchgäst", "Jobbar på distans"];
-
-      // Update DOM
-      document.getElementById('lunchDesc').innerText = lunchDesc;
-      document.getElementById('lunchPrice').innerText = lunchPrice;
-      updateReviews(texts.map((t, i) => ({ text: t, name: names[i], title: titles[i] })));
-
-      // Save to API (if available)
-      const settings = {
-        lunch: { description: lunchDesc, price: lunchPrice },
-        reviews: texts.map((t, i) => ({ text: t, name: names[i], title: titles[i] }))
-      };
-      await apiSaveSettings(settings);
-
-      alert('Ändringar sparade!');
-      aLogin.style.display = 'block';
-      aContent.style.display = 'none';
-      document.getElementById('adminPassword').value = '';
-      setAdminMode(false);
-    });
-  }
-
-  if (cBtn) {
-    cBtn.addEventListener('click', () => {
-      aLogin.style.display = 'block';
-      aContent.style.display = 'none';
-      document.getElementById('adminPassword').value = '';
-      setAdminMode(false);
-    });
-  }
-</script>
+<!-- ▼ ÄNDRAT: extern JS-fil istället för inline script -->
+<script src="cafe-admin.js"></script>
 </body>
 </html>
