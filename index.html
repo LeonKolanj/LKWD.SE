@@ -1115,20 +1115,14 @@
 
     Array.from(driftSel.options).forEach(opt => {
       const v = opt.value.toLowerCase();
-      if (!opt.value) { opt.disabled = false; return; } // placeholder
-      if (isBasic) {
-        // Basic PHP: only basic drift
-        opt.disabled = v.includes('premium') || v.includes('proffs');
-      } else if (isBasicPlus || isPremium) {
-        // Node.js packages: basic drift not available
+      if (!opt.value) { opt.disabled = false; return; }
+      if (isBasicPlus || isPremium) {
         opt.disabled = v.includes('basic drift');
       } else if (isProff) {
-        // Proffs: only proffs drift
         opt.disabled = !v.includes('proffs drift');
       } else {
         opt.disabled = false;
       }
-      // Reset if currently selected option becomes disabled
       if (opt.selected && opt.disabled) { driftSel.value = ''; }
     });
 
