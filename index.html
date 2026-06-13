@@ -745,9 +745,8 @@
         <div style="margin-top:24px;display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;background:#4ade80;border-radius:50%;display:inline-block;"></span> Tillgänglig — svarar inom 24 timmar</div>
       </div>
       <div class="contact-form">
-        <form name="lkwd-kontakt" method="POST" action="https://formspree.io/f/mzdqkdww" id="kontaktForm">
-          <input type="hidden" name="_next" value="https://lkwd.se/?skickat=1">
-          <input type="hidden" name="_subject" value="Ny förfrågan — LKWD.se">
+        <form name="lkwd-kontakt" method="POST" id="kontaktForm">
+          <input type="hidden" name="_gotcha" style="display:none">
           <div class="form-group"><input type="text" name="namn" placeholder="Ditt namn" id="contactName" required></div>
           <div class="form-group"><input type="email" name="epost" placeholder="Din e-post" id="contactEmail" required></div>
           <div class="form-group">
@@ -904,15 +903,35 @@
   const cookieSettingsFooter = document.getElementById('cookieSettingsFooter');
   if (cookieSettingsFooter) cookieSettingsFooter.addEventListener('click', e => { e.preventDefault(); loadSavedPrefs(); openModal(); });
 
-  // Contact form — native submit to Netlify, show success if returning from submit
+  // Contact form — fetch to Formspree, stay on page
   const netlifyForm = document.getElementById('kontaktForm');
   const successDiv  = document.getElementById('formSuccess');
-  if (new URLSearchParams(window.location.search).get('skickat') === '1') {
-    successDiv.style.display = 'block';
-    document.getElementById('kontakt').scrollIntoView({ behavior: 'smooth' });
-    setTimeout(() => { successDiv.style.display = 'none'; }, 6000);
+  if (netlifyForm && successDiv) {
+    netlifyForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitButton');
+      btn.disabled = true;
+      btn.textContent = 'Skickar…';
+      fetch('https://formspree.io/f/mzdqkdww', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(netlifyForm)
+      })
+      .then(r => {
+        if (!r.ok) throw new Error();
+        successDiv.style.display = 'block';
+        netlifyForm.reset();
+        btn.disabled = false;
+        btn.textContent = 'Skicka meddelande';
+        setTimeout(() => { successDiv.style.display = 'none'; }, 6000);
+      })
+      .catch(() => {
+        btn.disabled = false;
+        btn.textContent = 'Skicka meddelande';
+        alert('Något gick fel — försök igen eller maila leon@lkwd.se');
+      });
+    });
   }
-  // Offert cart — show thank you if returning from offert submit
   if (new URLSearchParams(window.location.search).get('offert') === '1') {
     const thanks = document.createElement('div');
     thanks.style.cssText = 'position:fixed;top:24px;left:50%;transform:translateX(-50%);background:#2a5a3a;color:#fff;padding:16px 32px;border-radius:8px;z-index:9999;font-size:0.9rem;box-shadow:0 8px 24px rgba(0,0,0,0.3);';
@@ -1052,16 +1071,32 @@
       cartNext.disabled = true; cartNext.textContent = 'Skickar…';
       const tel = document.getElementById('cftel').value.trim();
       const webNumLocal = parseInt((cart.web && cart.web.price || '').replace(/[^0-9]/g,'')) || 0;
-      // Submit via hidden native form so Netlify accepts it
-      const hf = document.getElementById('netlify-offert-form');
-      hf.querySelector('[name=namn]').value      = n;
-      hf.querySelector('[name=epost]').value     = em;
-      hf.querySelector('[name=telefon]').value   = tel;
-      hf.querySelector('[name=paket]').value     = cart.web ? cart.web.pkg : '';
-      hf.querySelector('[name=drift]').value     = cart.drift ? (cart.drift.drift + ' (' + cart.drift.monthly + ' kr/mån)') : '';
-      hf.querySelector('[name=totalt]').value    = webNumLocal ? (webNumLocal.toLocaleString('sv-SE') + ' kr engång' + (cart.drift && cart.drift.monthly ? ' + ' + cart.drift.monthly + ' kr/mån' : '')) : '';
-      hf.querySelector('[name=meddelande]').value = msg;
-      hf.submit();
+      const fd = new FormData();
+      fd.append('namn', n);
+      fd.append('epost', em);
+      fd.append('telefon', tel);
+      fd.append('paket', cart.web ? cart.web.pkg : '');
+      fd.append('drift', cart.drift ? (cart.drift.drift + ' (' + cart.drift.monthly + ' kr/mån)') : '');
+      fd.append('totalt', webNumLocal ? (webNumLocal.toLocaleString('sv-SE') + ' kr engång' + (cart.drift && cart.drift.monthly ? ' + ' + cart.drift.monthly + ' kr/mån' : '')) : '');
+      fd.append('meddelande', msg);
+      fetch('https://formspree.io/f/mgobpoqg', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: fd
+      })
+      .then(r => {
+        if (!r.ok) throw new Error();
+        document.getElementById('cart-success').style.display = 'block';
+        document.getElementById('cart-form').reset();
+        cartNext.disabled = false;
+        cartNext.textContent = 'Börja Projekt';
+        setTimeout(() => { document.getElementById('cart-success').style.display = 'none'; closeCart(); }, 4000);
+      })
+      .catch(() => {
+        cartNext.disabled = false;
+        cartNext.textContent = 'Börja Projekt';
+        alert('Något gick fel — försök igen eller maila leon@lkwd.se');
+      });
     }
   });
   cartBack.addEventListener('click', () => setStep(1));
