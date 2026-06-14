@@ -317,9 +317,18 @@
     /* CART */
     #cart-overlay { position: fixed; inset: 0; z-index: 499; background: rgba(0,0,0,0.55); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
     #cart-overlay.open { opacity: 1; pointer-events: auto; }
-    #cart-panel { position: fixed; top: 0; right: -440px; width: 440px; height: 100vh; z-index: 500; background: #1e1e1e; border-left: 1px solid #333; display: flex; flex-direction: column; transition: right 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow: -8px 0 40px rgba(0,0,0,0.5); }
+    #cart-panel { position: fixed; top: 0; right: -440px; width: 440px; height: 100vh; height: 100dvh; z-index: 500; background: #1e1e1e; border-left: 1px solid #333; display: flex; flex-direction: column; transition: right 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow: -8px 0 40px rgba(0,0,0,0.5); }
     #cart-panel.open { right: 0; }
-    @media (max-width: 460px) { #cart-panel { width: 100%; right: -100%; } }
+    @media (max-width: 480px) {
+      #cart-panel { width: 100%; right: -100%; top: 0; height: 100vh; height: 100dvh; border-left: none; }
+      .cart-hd { padding: 16px 20px; }
+      .cart-hd h3 { font-size: 1.1rem; }
+      .cart-body { padding: 16px 20px; -webkit-overflow-scrolling: touch; }
+      .cart-ft { padding: 12px 20px 20px; padding-bottom: max(20px, env(safe-area-inset-bottom)); background: #1e1e1e; border-top: 1px solid #333; flex-shrink: 0; }
+      .cart-btn-main { padding: 15px; font-size: 0.95rem; }
+      .cart-drift-opt { padding: 14px; }
+      .cart-tab { padding: 12px 8px; font-size: 0.7rem; }
+    }
     .cart-hd { padding: 20px 24px; border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; }
     .cart-hd h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: #fff; font-weight: 700; }
     .cart-x { width: 32px; height: 32px; border-radius: 8px; background: #2a2a2a; color: #9a9590; border: none; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
@@ -403,6 +412,47 @@
       .pricing-grid { grid-template-columns: 1fr; }
       .cookie-banner { flex-direction: column; text-align: center; }
     }
+    /* INSTAGRAM */
+    .insta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+    .insta-item {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      display: block;
+      background: #222;
+    }
+    .insta-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.4s ease;
+      display: block;
+    }
+    .insta-item:hover img { transform: scale(1.05); }
+    .insta-overlay {
+      position: absolute; inset: 0;
+      background: rgba(196,98,46,0.75);
+      display: flex; align-items: flex-end;
+      padding: 14px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .insta-item:hover .insta-overlay { opacity: 1; }
+    .insta-overlay span {
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    @media (max-width: 600px) {
+      .insta-grid { grid-template-columns: repeat(2, 1fr); gap: 3px; }
+    }
+
   </style>
   <link rel="canonical" href="https://lkwd.se/" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231a1a1a'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' font-weight='700' text-anchor='middle' fill='%23c4622e'%3ELK%3C/text%3E%3C/svg%3E" />
@@ -482,7 +532,7 @@
       <div class="port-card port-card-clickable">
         <a href="produkt/cafe-webb/" class="card-stretched-link" aria-label="Läs mer om café-webben">Läs mer om café-webben</a>
         <div class="port-thumb">
-          <img src="images/cafe-solna-preview.jpg" alt="Skärmbild av live-demo: Café Solna hemsida med meny och admin-panel" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&h=340&fit=crop" alt="Café Solna demo" loading="lazy" style="object-position: center;">
           <span class="port-status tag-live">Live demo</span>
         </div>
         <div class="port-body">
@@ -527,7 +577,7 @@
       </div>
       <div class="port-card">
         <div class="port-thumb">
-          <img src="images/motor-mutter-preview.jpg" alt="Skärmbild av Motor Mutter — verkstadshemsida byggd av LKWD" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=600&h=340&fit=crop" alt="Motor Mutter verkstad" loading="lazy">
           <span class="port-status tag-live">Live</span>
         </div>
         <div class="port-body">
@@ -544,7 +594,7 @@
 <!-- PRISER -->
 <section id="priser">
   <div class="container">
-    <div class="section-tag">Tydliga priser</div>
+    <div class="section-tag">Du äger allt</div>
     <h2 class="section-title">Välj ditt paket</h2>
     <div class="pricing-grid" id="pricingGrid">
 
@@ -718,10 +768,48 @@
   </div>
 </section>
 
-<section id="faq" class="faq-section">
+<!-- INSTAGRAM -->
+<section id="instagram" style="background:#111; padding:72px 0;">
   <div class="container">
-    <div class="section-tag" style="color:#c4622e;">Vanliga frågor</div>
-    <h2 class="section-title" style="color:#1a1a1a;">Frågor & svar</h2>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div class="section-tag">Följ med bakom kulisserna</div>
+        <h2 class="section-title">@lkwd.se</h2>
+      </div>
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener"
+         style="display:inline-flex;align-items:center;gap:8px;color:#c4622e;font-weight:600;font-size:0.85rem;border:1px solid #c4622e;padding:10px 20px;border-radius:30px;transition:all 0.2s;text-decoration:none;"
+         onmouseover="this.style.background='#c4622e';this.style.color='#fff'"
+         onmouseout="this.style.background='transparent';this.style.color='#c4622e'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4.5"/>
+          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+        Följ på Instagram
+      </a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+      <!-- Bild 1: Riktigt LKWD-inlägg -->
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:8px;overflow:hidden;display:block;">
+        <img src="images/insta-1.jpg" alt="LKWD hemsidor för lokala företag" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      </a>
+      <!-- Bild 2: Varm flatlay - kaffe, anteckningar, personlig -->
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:8px;overflow:hidden;display:block;">
+        <img src="https://images.unsplash.com/photo-1493723843671-1d655e66ac1c?w=400&h=400&fit=crop&crop=center" alt="Kreativ arbetsyta" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      </a>
+      <!-- Bild 3: Hand skissar wireframe på papper, jordnära -->
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:8px;overflow:hidden;display:block;">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&crop=center" alt="Skiss och planering" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      </a>
+      <!-- Bild 4: Litet café/butik - lokal verksamhet, levande -->
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:8px;overflow:hidden;display:block;">
+        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=400&fit=crop&crop=center" alt="Lokalt företag" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="faq-section">
     <div class="faq-list">
       <details class="faq-item-d"><summary>Hur lång tid tar det att bygga en hemsida?</summary><div class="faq-a-body">2–4 veckor beroende på storlek och hur snabbt du kan ge mig material. Jag håller dig uppdaterad löpande.</div></details>
       <details class="faq-item-d"><summary>Kan jag uppdatera hemsidan själv?</summary><div class="faq-a-body">Ja! Admin-panel ingår i alla paket. Du kan enkelt ändra text, priser och bilder utan teknisk kunskap.</div></details>
@@ -773,6 +861,46 @@
         </form>
         <div id="formSuccess" style="display:none;margin-top:16px;padding:12px;background:#2a5a3a;border-radius:8px;text-align:center;">✓ Tack! Jag återkommer inom 24 timmar.</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="instagram" style="background:#111;padding:72px 0;">
+  <div class="container">
+    <div class="section-tag" style="color:#c4622e;">Instagram</div>
+    <h2 class="section-title" style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);margin-bottom:8px;">@lkwd.se</h2>
+    <p style="color:#9a9590;margin-bottom:40px;max-width:420px;">Bakom kulisserna, demos och färdiga projekt.</p>
+    <div class="insta-grid">
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
+        <img src="images/insta-1.webp" alt="LKWD.se logotyp" loading="lazy">
+        <div class="insta-overlay"><span>LKWD.se — handbyggt från grunden</span></div>
+      </a>
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
+        <img src="images/insta-2.jpg" alt="LKWD hemsida hero" loading="lazy">
+        <div class="insta-overlay"><span>Hemsidor för lokala företag. Byggt rätt.</span></div>
+      </a>
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
+        <img src="images/insta-3.jpg" alt="LKWD portfolio" loading="lazy">
+        <div class="insta-overlay"><span>Verkliga projekt. Riktiga resultat.</span></div>
+      </a>
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
+        <img src="images/insta-4.jpg" alt="Café Solna demo" loading="lazy">
+        <div class="insta-overlay"><span>Café Solna — live demo från 4 990 kr</span></div>
+      </a>
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
+        <img src="images/insta-5.jpg" alt="LKWD priser" loading="lazy">
+        <div class="insta-overlay"><span>Basic från 4 990 kr — inga dolda avgifter</span></div>
+      </a>
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
+        <img src="images/insta-6.jpg" alt="Jag på LKWD" loading="lazy">
+        <div class="insta-overlay"><span>Varje projekt börjar med ett samtal</span></div>
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:32px;">
+      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="btn btn-outline" style="display:inline-flex;align-items:center;gap:10px;padding:12px 28px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+        Följ @lkwd.se på Instagram
+      </a>
     </div>
   </div>
 </section>
