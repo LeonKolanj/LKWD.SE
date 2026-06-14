@@ -317,27 +317,33 @@
     /* CART */
     #cart-overlay { position: fixed; inset: 0; z-index: 499; background: rgba(0,0,0,0.55); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
     #cart-overlay.open { opacity: 1; pointer-events: auto; }
-    #cart-panel { position: fixed; top: 0; right: -440px; width: 440px; height: 100vh; height: 100dvh; z-index: 500; background: #1e1e1e; border-left: 1px solid #333; display: flex; flex-direction: column; transition: right 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow: -8px 0 40px rgba(0,0,0,0.5); }
+    #cart-panel {
+      position: fixed; top: 0; right: -440px; width: 440px;
+      height: 100vh; height: 100dvh;
+      min-height: -webkit-fill-available;
+      z-index: 500; background: #1e1e1e; border-left: 1px solid #333;
+      display: flex; flex-direction: column;
+      transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: -8px 0 40px rgba(0,0,0,0.5);
+    }
     #cart-panel.open { right: 0; }
+    .cart-hd { flex-shrink: 0; padding: 20px 24px; border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; }
+    .cart-tabs { flex-shrink: 0; display: flex; border-bottom: 1px solid #333; }
+    .cart-body { flex: 1 1 0; overflow-y: auto; overflow-x: hidden; padding: 24px; -webkit-overflow-scrolling: touch; min-height: 0; }
+    .cart-ft { flex-shrink: 0; padding: 16px 24px; padding-bottom: max(16px, env(safe-area-inset-bottom)); border-top: 1px solid #333; background: #1e1e1e; }
     @media (max-width: 480px) {
-      #cart-panel { width: 100%; right: -100%; top: 0; height: 100vh; height: 100dvh; border-left: none; }
-      .cart-hd { padding: 16px 20px; }
-      .cart-hd h3 { font-size: 1.1rem; }
-      .cart-body { padding: 16px 20px; -webkit-overflow-scrolling: touch; }
-      .cart-ft { padding: 12px 20px 20px; padding-bottom: max(20px, env(safe-area-inset-bottom)); background: #1e1e1e; border-top: 1px solid #333; flex-shrink: 0; }
+      #cart-panel { width: 100%; right: -100%; border-left: none; }
+      .cart-hd { padding: 14px 18px; }
+      .cart-body { padding: 16px 18px; }
+      .cart-ft { padding: 14px 18px; padding-bottom: max(18px, env(safe-area-inset-bottom)); }
       .cart-btn-main { padding: 15px; font-size: 0.95rem; }
-      .cart-drift-opt { padding: 14px; }
       .cart-tab { padding: 12px 8px; font-size: 0.7rem; }
     }
-    .cart-hd { padding: 20px 24px; border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; }
     .cart-hd h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: #fff; font-weight: 700; }
     .cart-x { width: 32px; height: 32px; border-radius: 8px; background: #2a2a2a; color: #9a9590; border: none; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
     .cart-x:hover { background: #333; color: #fff; }
     .cart-tabs { display: flex; border-bottom: 1px solid #333; }
     .cart-tab { flex: 1; padding: 14px; text-align: center; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: #666; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; cursor: default; }
-    .cart-tab.active { color: #c4622e; border-bottom-color: #c4622e; }
-    .cart-tab.done { color: #9a9590; }
-    .cart-body { flex: 1; overflow-y: auto; padding: 24px; }
     .cart-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #2a2a2a; gap: 12px; }
     .cart-item:last-of-type { border-bottom: none; }
     .cart-item-info strong { display: block; font-size: 0.875rem; color: #fff; margin-bottom: 2px; }
@@ -383,7 +389,6 @@
     .cart-fg .fg-err { font-size: 0.75rem; color: #e87171; margin-top: 4px; display: none; }
     .cart-fg.err .fg-err { display: block; }
     .cart-success { display: none; padding: 14px; border-radius: 8px; background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.25); text-align: center; font-size: 0.875rem; color: #86efac; margin-bottom: 12px; }
-    .cart-ft { padding: 16px 24px; border-top: 1px solid #333; }
     .cart-btn-main { width: 100%; padding: 13px; background: #c4622e; color: #fff; border: none; border-radius: 40px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: background 0.2s, transform 0.2s; }
     .cart-btn-main:hover { background: #b05528; transform: translateY(-1px); }
     .cart-btn-main:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
@@ -577,7 +582,7 @@
       </div>
       <div class="port-card">
         <div class="port-thumb">
-          <img src="https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=600&h=340&fit=crop" alt="Motor Mutter verkstad" loading="lazy">
+          <img src="images/motor-mutter-preview.jpg" alt="Motor Mutter verkstad — mekaniker under bil" loading="lazy">
           <span class="port-status tag-live">Live</span>
         </div>
         <div class="port-body">
