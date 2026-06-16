@@ -254,6 +254,8 @@
     .faq-item-d { border-bottom: 1px solid #e0d9cc; background: #fff; }
     .faq-item-d:last-child { border-bottom: none; }
     .faq-item-d > summary { list-style: none; cursor: pointer; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: #1a1a1a; transition: background 0.2s; }
+    .faq-item-d > summary > span:first-child { flex: 1; }
+    .faq-summary-text { flex: 1; }
     .faq-item-d > summary::-webkit-details-marker { display: none; }
     .faq-item-d > summary::after { content: '+'; font-size: 1.4rem; color: #c4622e; line-height: 1; flex-shrink: 0; }
     .faq-item-d[open] > summary::after { content: '−'; }
@@ -494,7 +496,6 @@
       <a href="#tjanster">Tjänster</a>
       <a href="#arbeten">Arbeten</a>
       <a href="#priser">Priser</a>
-      <a href="why-nodejs.html">Vad är Node.js?</a>
       <a href="#om">Om mig</a>
       <a href="#kontakt">Kontakt</a>
     </div>
@@ -532,16 +533,14 @@
 <section id="arbeten" class="portfolio-section">
   <div class="container">
     <div class="section-tag" style="color:#c4622e;">Exempel på hemsidor</div>
-    <h2 class="section-title" style="color:#1a1a1a;">Verkliga projekt. Riktiga resultat.</h2>
+    <h2 class="section-title" style="color:#1a1a1a;">Vad jag kan bygga åt dig.</h2>
+    <p style="color:#666;margin-bottom:40px;max-width:560px;">Nedan ser du fullt fungerande demos som visar vad varje paket kan leverera — samma teknik, samma design och samma funktioner som din hemsida skulle få.</p>
     <div class="portfolio-grid">
       <div class="port-card port-card-clickable">
         <a href="produkt/cafe-webb/" class="card-stretched-link" aria-label="Läs mer om café-webben">Läs mer om café-webben</a>
         <div class="port-thumb">
           <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&h=340&fit=crop" alt="Café Solna demo" loading="lazy" style="object-position: center;">
-          <span class="port-status tag-live">Live demo</span>
-        </div>
-        <div class="port-body">
-          <h3>Café Solna — Basic-paketet</h3>
+          <span class="port-status tag-live">Interaktiv demo</span>
           <p>Kaffe, bakverk & lunch. Meny med märkningar, admin-panel, kontaktformulär och karta.</p>
           <span class="package-badge">Basic · 4 990 kr</span>
           <span class="package-badge package-badge-green">Admin-panel ingår</span>
@@ -555,7 +554,7 @@
       <div class="port-card">
         <div class="port-thumb">
           <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=340&fit=crop" alt="Premium demo Bygg & Co" loading="lazy">
-          <span class="port-status tag-live">Live demo</span>
+          <span class="port-status tag-live">Interaktiv demo</span>
         </div>
         <div class="port-body">
           <h3>Bygg & Co — Premium (Node.js)</h3>
@@ -625,7 +624,7 @@
       </div>
 
       <!-- BASIC+ -->
-      <div class="price-card" id="basicPlusCard" data-pkg="Basic+ (6 990 kr)" data-info="Basic+ är instegsnivån på Node.js — snabbare laddning, högre säkerhet (JWT-tokens, bcrypt-lösenord) och inloggningssystem för personal. Kräver Premium drift." style="cursor:pointer">
+      <div class="price-card" id="basicPlusCard" data-pkg="Basic+ (6 990 kr)" data-info="Basic+ är instegsnivån på Node.js — snabbare laddning, högre säkerhet (JWT-tokens, bcrypt-lösenord) och inloggningssystem för personal. Kräver Premium drift." style="cursor:pointer;border:1px solid transparent;">
         <div class="price-head">
           <h3>Basic+ (Node.js)</h3>
           <div class="price-amount">6 990 <small>kr exkl. moms</small></div>
@@ -671,7 +670,7 @@
       <!-- PROFFS -->
       <div class="price-card" id="proffsCard" data-pkg="Proffs (från 14 990 kr)" data-info="Proffs är för dig som behöver e-handel eller bokning. Inkluderar betalningsintegration (Swish, kort) och order-/bokningshantering. Alltid fast offert innan vi börjar.">
         <div class="price-head">
-          <h3>Proffs</h3>
+          <h3>Proffs (Node.js)</h3>
           <div class="price-amount">från 14 990 <small>kr exkl. moms</small></div>
           <div class="price-for">E-handel, bokningssystem, medlemsportaler</div>
         </div>
@@ -793,22 +792,15 @@
         Följ på Instagram
       </a>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
-      <!-- Bild 1: Riktigt LKWD-inlägg -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
       <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:8px;overflow:hidden;display:block;">
-        <img src="images/insta-1.jpg" alt="LKWD hemsidor för lokala företag" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <img src="images/insta-1.jpg" alt="Hemsidor för lokala företag. Byggt rätt." loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
       </a>
-      <!-- Bild 2: Varm flatlay - kaffe, anteckningar, personlig -->
       <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:8px;overflow:hidden;display:block;">
-        <img src="https://images.unsplash.com/photo-1493723843671-1d655e66ac1c?w=400&h=400&fit=crop&crop=center" alt="Kreativ arbetsyta" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <img src="images/insta-post2-paket.jpg" alt="Fyra paket. Ett fast pris." loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
       </a>
-      <!-- Bild 3: Hand skissar wireframe på papper, jordnära -->
       <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:8px;overflow:hidden;display:block;">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop&crop=center" alt="Skiss och planering" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-      </a>
-      <!-- Bild 4: Litet café/butik - lokal verksamhet, levande -->
-      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" style="aspect-ratio:1;border-radius:8px;overflow:hidden;display:block;">
-        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&h=400&fit=crop&crop=center" alt="Lokalt företag" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <img src="images/insta-post3-drift.jpg" alt="Löpande drift. Välj din nivå." loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
       </a>
     </div>
   </div>
@@ -818,7 +810,7 @@
     <div class="faq-list">
       <details class="faq-item-d"><summary>Hur lång tid tar det att bygga en hemsida?</summary><div class="faq-a-body">2–4 veckor beroende på storlek och hur snabbt du kan ge mig material. Jag håller dig uppdaterad löpande.</div></details>
       <details class="faq-item-d"><summary>Kan jag uppdatera hemsidan själv?</summary><div class="faq-a-body">Ja! Admin-panel ingår i alla paket. Du kan enkelt ändra text, priser och bilder utan teknisk kunskap.</div></details>
-      <details class="faq-item-d"><summary>Vad är Node.js och varför är det bättre?</summary><div class="faq-a-body">Node.js är en modern teknik som används av Netflix, Uber och LinkedIn. Det ger snabbare laddning, högre säkerhet och bättre skalbarhet. <a href="why-nodejs.html" style="color:#c4622e;font-weight:600;">Läs mer om Node.js →</a></div></details>
+      <details class="faq-item-d"><summary><span class="faq-summary-text">Vad är <span style="color:#c4622e;font-weight:700;">Node.js</span> och varför är det bättre?</span></summary><div class="faq-a-body"><strong style="color:#c4622e;">Node.js</strong> är en modern teknik som används av Netflix, Uber och LinkedIn. Det ger snabbare laddning, högre säkerhet och bättre skalbarhet än traditionell PHP. <a href="why-nodejs.html" style="color:#c4622e;font-weight:600;">Läs mer om Node.js →</a></div></details>
       <details class="faq-item-d"><summary>Vad händer om vi avslutar samarbetet?</summary><div class="faq-a-body">Du äger allt — domänen, koden, innehållet. Vill du avsluta lämnar jag över alla filer inom 14 dagar utan krångel.</div></details>
       <details class="faq-item-d"><summary>Syns min hemsida på Google?</summary><div class="faq-a-body">Ja. Jag bygger med SEO-grunderna — rätt rubriker, metabeskrivningar, snabb laddning och korrekt struktur.</div></details>
     </div>
@@ -870,49 +862,9 @@
   </div>
 </section>
 
-<section id="instagram" style="background:#111;padding:72px 0;">
-  <div class="container">
-    <div class="section-tag" style="color:#c4622e;">Instagram</div>
-    <h2 class="section-title" style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);margin-bottom:8px;">@lkwd.se</h2>
-    <p style="color:#9a9590;margin-bottom:40px;max-width:420px;">Bakom kulisserna, demos och färdiga projekt.</p>
-    <div class="insta-grid">
-      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
-        <img src="images/insta-1.webp" alt="LKWD.se logotyp" loading="lazy">
-        <div class="insta-overlay"><span>LKWD.se — handbyggt från grunden</span></div>
-      </a>
-      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
-        <img src="images/insta-2.jpg" alt="LKWD hemsida hero" loading="lazy">
-        <div class="insta-overlay"><span>Hemsidor för lokala företag. Byggt rätt.</span></div>
-      </a>
-      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
-        <img src="images/insta-3.jpg" alt="LKWD portfolio" loading="lazy">
-        <div class="insta-overlay"><span>Verkliga projekt. Riktiga resultat.</span></div>
-      </a>
-      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
-        <img src="images/insta-4.jpg" alt="Café Solna demo" loading="lazy">
-        <div class="insta-overlay"><span>Café Solna — live demo från 4 990 kr</span></div>
-      </a>
-      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
-        <img src="images/insta-5.jpg" alt="LKWD priser" loading="lazy">
-        <div class="insta-overlay"><span>Basic från 4 990 kr — inga dolda avgifter</span></div>
-      </a>
-      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="insta-item">
-        <img src="images/insta-6.jpg" alt="Jag på LKWD" loading="lazy">
-        <div class="insta-overlay"><span>Varje projekt börjar med ett samtal</span></div>
-      </a>
-    </div>
-    <div style="text-align:center;margin-top:32px;">
-      <a href="https://instagram.com/lkwd.se" target="_blank" rel="noopener" class="btn btn-outline" style="display:inline-flex;align-items:center;gap:10px;padding:12px 28px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-        Följ @lkwd.se på Instagram
-      </a>
-    </div>
-  </div>
-</section>
-
 <footer>
-  <div class="footer-inner">
-    <div class="footer-logo">LK<span>WD</span>.se</div>
+  <div class="footer-inner" style="flex-direction:column;align-items:center;text-align:center;gap:20px;">
+    <a href="#" class="footer-logo" style="text-decoration:none;color:#e8e6e1;">LK<span>WD</span>.se</a>
     <div class="footer-quote">"Handbyggt från grunden — du äger varje rad."</div>
     <div class="footer-legal">
       <a href="integritetspolicy.html" id="privacyLink">Integritetspolicy</a>
@@ -1078,9 +1030,31 @@
 
   const mobileBtn = document.getElementById('mobileBtn');
   const navLinks  = document.querySelector('.nav-links');
-  if (mobileBtn) mobileBtn.addEventListener('click', () => {
-    if (navLinks.style.display === 'flex') navLinks.style.display = 'none';
-    else { navLinks.style.display = 'flex'; navLinks.style.flexDirection = 'column'; navLinks.style.position = 'absolute'; navLinks.style.top = '70px'; navLinks.style.left = '0'; navLinks.style.right = '0'; navLinks.style.background = '#1a1a1a'; navLinks.style.padding = '20px'; navLinks.style.gap = '20px'; navLinks.style.zIndex = '99'; }
+
+  function closeMobileMenu() {
+    navLinks.style.display = 'none';
+    mobileBtn.textContent = '☰';
+  }
+  function openMobileMenu() {
+    navLinks.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:#1a1a1a;padding:20px;gap:20px;z-index:99;border-bottom:1px solid #2a2a2a;';
+    mobileBtn.textContent = '✕';
+  }
+
+  if (mobileBtn) mobileBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    navLinks.style.display === 'flex' ? closeMobileMenu() : openMobileMenu();
+  });
+
+  // Close on any nav link click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => closeMobileMenu());
+  });
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (navLinks.style.display === 'flex' && !navLinks.contains(e.target) && e.target !== mobileBtn) {
+      closeMobileMenu();
+    }
   });
 
   // ── CART ──
